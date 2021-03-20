@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using Audio;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Player
@@ -105,7 +106,13 @@ namespace Player
         
         private void OnGroundLandInvoke()
         {
+            Sounds.Event.OnPlayerLand.Invoke();
             OnGroundLand?.Invoke();
+        }
+
+        private void OnRunStep()
+        {
+            Sounds.Event.OnFootStep.Invoke();
         }
     }
 }

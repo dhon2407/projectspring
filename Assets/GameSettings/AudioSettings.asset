@@ -9,7 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f9debbac63b4bd5a77c0a30e4f4d4f6, type: 3}
-  m_Name: PlayerSettings
+  m_Script: {fileID: 11500000, guid: 2d428af78d8cae141afd723160ec7c81, type: 3}
+  m_Name: AudioSettings
   m_EditorClassIdentifier: 
-  baseMoveSpeed: 2
+  footStep:
+    sound: Footstep1
+    volume: 1
+  playerJump:
+    sound: Jump
+    volume: 1
+  playerLand:
+    sound: Landing
+    volume: 0.559

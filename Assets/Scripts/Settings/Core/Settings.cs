@@ -9,13 +9,13 @@ namespace Settings.Core
         public static bool Ready => _instance != null;
         
         [Required, SerializeField] private PlayerSettings playerSettings = null;
-        // [Required, SerializeField] private LevelSettings levelSettings = null;
+        [Required, SerializeField] private Audio.AudioSettings audioSettings = null;
         // [Required, SerializeField] private UISettings uiSettings = null;
         // [Required, SerializeField] private CameraSettings cameraSettings = null;
         // [Required, SerializeField] private DevSettings devSettings = null;
         // [Required, SerializeField] private AudioSettings audioSettings = null;
         public static PlayerSettings Player => Instance.playerSettings;
-        // public static LevelSettings Level => Instance.levelSettings;
+        public static Audio.AudioSettings Audio => Instance.audioSettings;
         // public static UISettings UI => Instance.uiSettings;
         // public static CameraSettings Camera => Instance.cameraSettings;
         // public static DevSettings Dev => Instance.devSettings;
