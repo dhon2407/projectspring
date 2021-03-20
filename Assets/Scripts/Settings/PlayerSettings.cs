@@ -9,5 +9,8 @@ namespace Settings
         [BoxGroup("Movement")]
         [MinValue(0)]
         public float baseMoveSpeed = 5f;
+        [BoxGroup("Movement")]
+        [MinValue(0)]
+        public float baseJumpForce = 7.5f;
     }
 }
