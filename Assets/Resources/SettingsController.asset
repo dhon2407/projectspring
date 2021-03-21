@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSettings: {fileID: 11400000, guid: b7d646e3702311e46bad1adbf8c58c7b, type: 2}
   audioSettings: {fileID: 11400000, guid: ee64d29d69c5fa14ca97f3e839b82af4, type: 2}
+  levelSettings: {fileID: 11400000, guid: 8780c252e7b0b244d8805f61f3913bd0, type: 2}
