@@ -65,7 +65,7 @@ namespace Environment
             if (!(Mathf.Abs(camPosition.y - position.y) >= _textureUnitSizeY)) return;
             
             var offsetPositionY = (camPosition.y - position.y) % _textureUnitSizeY;
-            _transform.position = new Vector3(position.x, camPosition.y + offsetPositionY);
+            _transform.position = new Vector3(position.x, camPosition.y + offsetPositionY, _transform.position.z);
         }
 
         private void CheckHorizontalLimits(Vector3 camPosition, Vector3 position)
@@ -74,7 +74,7 @@ namespace Environment
             if (!(Mathf.Abs(camPosition.x - position.x) >= _textureUnitSizeX)) return;
             
             var offsetPositionX = (camPosition.x - position.x) % _textureUnitSizeX;
-            _transform.position = new Vector3(camPosition.x + offsetPositionX, position.y);
+            _transform.position = new Vector3(camPosition.x + offsetPositionX, position.y, _transform.position.z);
         }
     }
 }

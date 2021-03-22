@@ -6,7 +6,9 @@ namespace Player.Input
 {
     public class KeyboardInput : MonoBehaviour, IInputHandler
     {
-        public int MovementDirection => 1;
+        [SerializeField]
+        private bool pauseMovement;
+        public int MovementDirection => pauseMovement ? 0 : 1;
         public IAction CheckInputAction => _inputActions.Count <= 0 ? null : _inputActions.Peek();
         public IAction ConsumeCurrentInputAction
         {

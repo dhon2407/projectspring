@@ -6,6 +6,7 @@ namespace Managers
 {
     public class LevelManager : SingletonManager<LevelManager>
     {
+        private static int _levelSegmentGenerated = 0;
         public static void RegisterSegment(LevelSegmentHandler levelSegmentHandler)
         {
             levelSegmentHandler.OnLevelSegmentEnding += SegmentEnding;
@@ -13,14 +14,14 @@ namespace Managers
 
         private static void SegmentEnding(LevelSegmentHandler segmentOwner, Transform endPoint)
         {
+            _levelSegmentGenerated++;
+
+            var nextSegmentRef = Settings.Core.Settings.Level.GetNextSegment();
             segmentOwner.OnLevelSegmentEnding -= SegmentEnding;
-            var nextSegment = Instantiate(Settings.Core.Settings.Level.GetNextSegment(), endPoint.position,
+            var nextSegment = Instantiate(nextSegmentRef, endPoint.position,
                 Quaternion.identity);
-            
-            nextSegment.OnLevelSegmentStarting += owner =>
-            {
-                segmentOwner.DestroySelf();
-            };
+            nextSegment.name = $"{nextSegmentRef.name} - {_levelSegmentGenerated}";
+            nextSegment.OnLevelSegmentStarting += owner => segmentOwner.DestroySelf();
         }
 
         protected override void Init()

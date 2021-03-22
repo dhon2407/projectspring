@@ -1,5 +1,7 @@
-﻿using Sirenix.OdinInspector;
+﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using Utilities.Helpers;
 
 namespace Player
 {
@@ -10,9 +12,18 @@ namespace Player
         private bool _tempDisabled;
         public bool OnGround => !_tempDisabled && _triggeredColliderCount > 0;
 
-        public void TemporaryDisable(bool value)
+        public void TemporaryDisable(float? time = null)
         {
-            _tempDisabled = value;
+            _tempDisabled = true;
+            if (!time.HasValue) return;
+            
+            Action enable = Enable;
+            enable.DelayInvoke(time.Value);
+        }
+
+        public void Enable()
+        {
+            _tempDisabled = false;
         }
 
         private void OnTriggerEnter2D(Collider2D other)
