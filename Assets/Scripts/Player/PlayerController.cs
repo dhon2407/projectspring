@@ -16,6 +16,7 @@ namespace Player
             Grounded = false;
             Animator.SetBool(AnimParamGrounded, Grounded);
             Rigidbody2D.velocity = new Vector2(Rigidbody2D.velocity.x, Settings.Core.Settings.Player.baseJumpForce);
+            GroundSensor.TemporaryDisable(0.2f);
         }
     }
 }

@@ -130,7 +130,10 @@ namespace Player
         private void CheckGround()
         {
             if (!Grounded && GroundSensor.OnGround)
+            {
+                OnGroundLandInvoke();
                 Grounded = true;
+            }
 
             if (Grounded && !GroundSensor.OnGround)
                 Grounded = false;
