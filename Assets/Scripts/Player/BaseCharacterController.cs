@@ -1,5 +1,6 @@
 ﻿using Audio;
 using Player.Input;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Player
@@ -8,6 +9,9 @@ namespace Player
     {
         #region Inspector Values
 
+        [ShowInInspector, ShowIf("@InputHandler != null"), LabelText("Input:")]
+        private IInputHandler CurrentInputHandler => InputHandler;
+        
         #endregion
 
         #region Events

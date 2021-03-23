@@ -1,34 +1,18 @@
-﻿using System.Collections.Generic;
-using Player.Input.Action;
+﻿using Player.Input.Action;
 using UnityEngine;
 
 namespace Player.Input
 {
-    public class KeyboardInput : MonoBehaviour, IInputHandler
+    public class KeyboardInput : BaseInputHandler
     {
         [SerializeField]
         private bool pauseMovement;
-        public int MovementDirection => pauseMovement ? 0 : 1;
-        public IAction CheckInputAction => _inputActions.Count <= 0 ? null : _inputActions.Peek();
-        public IAction ConsumeCurrentInputAction
-        {
-            get
-            {
-                if (_inputActions.Count <= 0)
-                    return null;
-                
-                var currentAction =_inputActions.Dequeue();
-                _inputActions.Clear();
-                return currentAction;
-            }
-        }
-
-        private readonly Queue<IAction> _inputActions = new Queue<IAction>();
+        public override int MovementDirection => pauseMovement ? 0 : 1;
 
         private void Update()
         {
             if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
-                _inputActions.Enqueue(new JumpAction());
+                InputActions.Enqueue(new JumpAction());
         }
     }
 }

@@ -309,11 +309,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7216317338779392757}
-  - component: {fileID: 3280551501119560619}
   - component: {fileID: 3764271992053789189}
   - component: {fileID: 4041983829798186269}
   - component: {fileID: 7853426713638563735}
   - component: {fileID: 7982316354510532225}
+  - component: {fileID: 3280551501119560619}
+  - component: {fileID: 6787512281321190012}
   - component: {fileID: 2120476739}
   m_Layer: 0
   m_Name: PrototypePlayer
@@ -339,18 +340,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3280551501119560619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5126507520524490402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d4badabce1241d3899461c05f825fa4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &3764271992053789189
 Animator:
   serializedVersion: 3
@@ -409,7 +398,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1000
   m_Sprite: {fileID: 21300000, guid: 300ea1a5869382b43bf6149aba92c4db, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -458,6 +447,30 @@ CapsuleCollider2D:
   m_Offset: {x: -0.036924303, y: 0.72213}
   m_Size: {x: 0.5172479, y: 1.3006438}
   m_Direction: 0
+--- !u!114 &3280551501119560619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5126507520524490402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d4badabce1241d3899461c05f825fa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6787512281321190012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5126507520524490402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2af037847c04ef389afb424bba67e28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2120476739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,3 +483,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d23799743458498bbe214323cc9a8d41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseMovement: 0
