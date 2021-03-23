@@ -3,10 +3,11 @@ using Managers;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Utilities.Helpers;
+using GameSettings = Settings.Core.Settings;
 
 namespace Level
 {
-    public class LevelSegmentHandler : MonoBehaviour
+    public sealed class LevelSegmentHandler : MonoBehaviour
     {
         [Required, SerializeField]
         private Transform endPoint;
@@ -45,12 +46,12 @@ namespace Level
             OnLevelSegmentStartingInvoke();
         }
 
-        protected virtual void OnLevelEndingInvoke(Transform endTransform)
+        private void OnLevelEndingInvoke(Transform endTransform)
         {
             OnLevelSegmentEnding?.Invoke(this, endTransform);
         }
-        
-        protected virtual void OnLevelSegmentStartingInvoke()
+
+        private void OnLevelSegmentStartingInvoke()
         {
             OnLevelSegmentStarting?.Invoke(this);
         }
@@ -58,7 +59,7 @@ namespace Level
         public void DestroySelf()
         {
             Action destroySelf = () => Destroy(gameObject);
-            destroySelf.DelayInvoke(0.5f);
+            destroySelf.DelayInvoke(GameSettings.Dev.levelSegmentDestroyDelay);
         }
     }
 }

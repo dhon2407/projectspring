@@ -12,5 +12,7 @@ namespace Settings
         [BoxGroup("Movement")]
         [MinValue(0)]
         public float baseJumpForce = 7.5f;
+        [BoxGroup("Movement")]
+        public bool disableMultipleJumps;
     }
 }

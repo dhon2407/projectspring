@@ -1,6 +1,6 @@
-﻿using Audio;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
+using GameSettings = Settings.Core.Settings;
 
 namespace Player
 {
@@ -9,8 +9,8 @@ namespace Player
     {
         public override void Jump()
         {
-            //if (!Grounded)
-            //    return;
+            if (!Grounded && GameSettings.Player.disableMultipleJumps)
+                return;
             
             Animator.SetTrigger(AnimParamJump);
             Grounded = false;

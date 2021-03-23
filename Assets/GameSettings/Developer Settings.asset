@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f9debbac63b4bd5a77c0a30e4f4d4f6, type: 3}
-  m_Name: PlayerSettings
+  m_Script: {fileID: 11500000, guid: a2bfb50578d14453bbbc7566be19bc7a, type: 3}
+  m_Name: Developer Settings
   m_EditorClassIdentifier: 
-  baseMoveSpeed: 5.56
-  baseJumpForce: 7.5
-  disableMultipleJumps: 1
+  levelSegmentDestroyDelay: 0.5
