@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Managers;
 using Player.Input.Action;
 using Player.States;
 using Sirenix.OdinInspector;
@@ -25,13 +26,6 @@ namespace Player
             Rigidbody2D.velocity = new Vector2(Rigidbody2D.velocity.x, Settings.Core.Settings.Player.baseJumpForce);
             GroundSensor.TemporaryDisable(0.2f);
         }
-        
-        private bool JumpRestrictions()
-        {
-            return !Grounded &&
-                   GameSettings.Player.disableMultipleJumps ||
-                   !CurrentState.CanJump;
-        }
 
         public override void DoAction(IAction action)
         {
@@ -39,6 +33,19 @@ namespace Player
                 HandleAttackAction();
             else if (action is Block)
                 HandleBlock();
+        }
+
+        protected override void GameStart()
+        {
+            base.GameStart();
+            GameManager.SetPlayer(this);
+        }
+
+        private bool JumpRestrictions()
+        {
+            return !Grounded &&
+                   GameSettings.Player.disableMultipleJumps ||
+                   !CurrentState.CanJump;
         }
 
         //TODO Move to other class / refactoring

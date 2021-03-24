@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f9debbac63b4bd5a77c0a30e4f4d4f6, type: 3}
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
-  baseMoveSpeed: 5.56
+  baseMoveSpeed: 4.5
   baseJumpForce: 7.5
   disableMultipleJumps: 1

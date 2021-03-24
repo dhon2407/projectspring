@@ -1,4 +1,5 @@
 ﻿using Lean.Touch;
+using Managers;
 using Player.Input.Action;
 using UnityEngine;
 using Utilities.Helpers;
@@ -32,7 +33,24 @@ namespace Player.Input
 
 		private LeanScreenDepth _screenDepth = new LeanScreenDepth(LeanScreenDepth.ConversionType.DepthIntercept);
 		private bool _stopMovement;
+		private bool _gameStarted;
 
+		private void Awake()
+		{
+			GameManager.OnGameStarted += GameStart;
+		}
+
+		private void OnDestroy()
+		{
+			GameManager.OnGameStarted -= GameStart;
+		}
+
+		private void GameStart()
+		{
+			System.Action enable = () => _gameStarted = true;
+			enable.DelayInvoke(1f);
+		}
+		
 		private void OnEnable()
 		{
 			LeanTouch.OnFingerTap += HandleFingerTap;
@@ -44,9 +62,20 @@ namespace Player.Input
 			LeanTouch.OnFingerTap -= HandleFingerTap;
 			LeanTouch.OnFingerSwipe -= HandleSwipe;
 		}
+		
+		private void HandleFingerTap(LeanFinger finger)
+		{
+			if (!_gameStarted)
+				return;
+			
+			InputActions.Enqueue(new BasicAttack());
+		}
 
 		private void HandleSwipe(LeanFinger finger)
 		{
+			if (!_gameStarted)
+				return;
+			
 			HandleFingerSwipe(finger.StartScreenPosition, finger.ScreenPosition);
 		}
 
@@ -73,11 +102,6 @@ namespace Player.Input
 			var angleDelta = Mathf.DeltaAngle(angle, requiredAngle);
 
 			return !(angleDelta < requiredArc * -0.5f) && !(angleDelta >= requiredArc * 0.5f);
-		}
-
-		private void HandleFingerTap(LeanFinger finger)
-		{
-			InputActions.Enqueue(new BasicAttack());
 		}
 	}
 }

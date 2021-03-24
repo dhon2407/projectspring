@@ -1,6 +1,7 @@
 ﻿using System;
 using Audio;
 using CustomHelper;
+using Managers;
 using Player.Input;
 using Player.Input.Action;
 using Player.States;
@@ -44,6 +45,7 @@ namespace Player
         protected bool Moving;
         protected int FacingDirection;
         private IPlayerState _currentState;
+        private bool _gameStarted;
         
         public bool OnGround
         {
@@ -60,11 +62,10 @@ namespace Player
             {
                 _currentState.Exit();
                 _currentState = value;
-                this.Log($"Update state : {_currentState.GetType()}");
             } 
         }
 
-        public int MoveDirection => InputHandler?.MovementDirection ?? 0;
+        public int MoveDirection => _gameStarted ? InputHandler?.MovementDirection ?? 0 : 0;
 
         public abstract void Jump();
         public abstract void DoAction(IAction action);
@@ -93,8 +94,19 @@ namespace Player
             GroundSensor = FindObjectOfType<GroundSensor>();
             Renderer = GetComponent<SpriteRenderer>();
             InputHandler = GetComponent<IInputHandler>();
-
             _currentState = DefaultState;
+
+            GameManager.OnGameStarted += GameStart;
+        }
+
+        private void OnDestroy()
+        {
+            GameManager.OnGameStarted -= GameStart;
+        }
+
+        protected virtual void GameStart()
+        {
+            _gameStarted = true;
         }
 
         private void Update()
