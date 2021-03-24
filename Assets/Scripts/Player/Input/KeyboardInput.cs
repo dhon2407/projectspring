@@ -1,5 +1,7 @@
-﻿using Player.Input.Action;
+﻿using MEC;
+using Player.Input.Action;
 using UnityEngine;
+using Utilities.Helpers;
 
 namespace Player.Input
 {
@@ -7,7 +9,24 @@ namespace Player.Input
     {
         [SerializeField]
         private bool pauseMovement;
+
+        private const string ResumeMovementTag = "Resuming Movement";
         public override int MovementDirection => pauseMovement ? 0 : 1;
+        public override void TemporaryStopMovement(float? duration)
+        {
+            Timing.KillCoroutines(ResumeMovementTag);
+            pauseMovement = true;
+            if (!duration.HasValue) return;
+			
+            System.Action resume = ()=> pauseMovement = false;
+            resume.DelayInvoke(duration.Value, ResumeMovementTag);
+        }
+
+        public override void ResumeMovement()
+        {
+            Timing.KillCoroutines(ResumeMovementTag);
+            pauseMovement = false;
+        }
 
         private void Update()
         {

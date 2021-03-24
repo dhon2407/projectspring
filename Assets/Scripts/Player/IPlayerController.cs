@@ -1,4 +1,6 @@
-﻿namespace Player
+﻿using Player.Input.Action;
+
+namespace Player
 {
     public delegate void BasicEvent();
     
@@ -11,5 +13,6 @@
         void OnJumpInvoke();
         void OnGroundLandInvoke();
         void OnRunStep();
+        void DoAction(IAction action);
     }
 }

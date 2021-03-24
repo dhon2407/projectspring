@@ -7,5 +7,7 @@ namespace Player.Input
         int MovementDirection { get; }
         IAction CheckInputAction { get; }
         IAction ConsumeCurrentInputAction { get; }
+        void TemporaryStopMovement(float? duration = null);
+        void ResumeMovement();
     }
 }

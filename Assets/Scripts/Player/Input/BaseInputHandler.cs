@@ -7,6 +7,9 @@ namespace Player.Input
     public abstract class BaseInputHandler : MonoBehaviour, IInputHandler
     {
         public abstract int MovementDirection { get; }
+        public abstract void TemporaryStopMovement(float? duration);
+        public abstract void ResumeMovement();
+
         public IAction CheckInputAction => InputActions.Count <= 0 ? null : InputActions.Peek();
         public IAction ConsumeCurrentInputAction
         {
@@ -22,5 +25,6 @@ namespace Player.Input
         }
 
         protected readonly Queue<IAction> InputActions = new Queue<IAction>();
+        private IInputHandler _inputHandlerImplementation;
     }
 }

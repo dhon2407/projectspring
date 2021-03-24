@@ -1,5 +1,6 @@
 ﻿using Audio;
 using Player.Input;
+using Player.Input.Action;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -49,6 +50,7 @@ namespace Player
         public int MoveDirection => InputHandler?.MovementDirection ?? 0;
 
         public abstract void Jump();
+        public abstract void DoAction(IAction action);
         
         public virtual void OnJumpInvoke()
         {

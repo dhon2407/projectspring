@@ -1,7 +1,7 @@
-﻿using CustomHelper;
-using Lean.Touch;
+﻿using Lean.Touch;
 using Player.Input.Action;
 using UnityEngine;
+using Utilities.Helpers;
 
 namespace Player.Input
 {
@@ -14,9 +14,24 @@ namespace Player.Input
 		[SerializeField]
 		private float minSwipeValueDetection = 1;
 
-		public override int MovementDirection => 1;
+		public override int MovementDirection => _stopMovement ? 0 : 1;
 		
+		public override void TemporaryStopMovement(float? duration)
+		{
+			_stopMovement = true;
+			if (!duration.HasValue) return;
+			
+			System.Action resume = ()=> _stopMovement = false;
+			resume.DelayInvoke(duration.Value);
+		}
+
+		public override void ResumeMovement()
+		{
+			_stopMovement = false;
+		}
+
 		private LeanScreenDepth _screenDepth = new LeanScreenDepth(LeanScreenDepth.ConversionType.DepthIntercept);
+		private bool _stopMovement;
 
 		private void OnEnable()
 		{
@@ -59,7 +74,7 @@ namespace Player.Input
 
 		private void HandleFingerTap(LeanFinger finger)
 		{
-			//ATTACK
+			InputActions.Enqueue(new BasicAttack());
 		}
 	}
 }

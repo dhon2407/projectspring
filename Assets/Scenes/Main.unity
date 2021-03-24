@@ -1837,6 +1837,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3280551501119560619, guid: 5169597be03580c48a8f18fcb66c486e, type: 3}
+      propertyPath: maxAttackUnlock
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3764271992053789189, guid: 5169597be03580c48a8f18fcb66c486e, type: 3}
       propertyPath: m_Controller
       value: 
