@@ -1,6 +1,9 @@
-﻿using Audio;
+﻿using System;
+using Audio;
+using CustomHelper;
 using Player.Input;
 using Player.Input.Action;
+using Player.States;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -40,11 +43,25 @@ namespace Player
         protected bool Grounded;
         protected bool Moving;
         protected int FacingDirection;
+        private IPlayerState _currentState;
         
         public bool OnGround
         {
             get => Grounded && GroundSensor.OnGround;
             set => Grounded = value;
+        }
+
+        protected static readonly IPlayerState DefaultState = new FreeState();
+
+        public IPlayerState CurrentState
+        {
+            get => _currentState;
+            set
+            {
+                _currentState.Exit();
+                _currentState = value;
+                this.Log($"Update state : {_currentState.GetType()}");
+            } 
         }
 
         public int MoveDirection => InputHandler?.MovementDirection ?? 0;
@@ -76,6 +93,8 @@ namespace Player
             GroundSensor = FindObjectOfType<GroundSensor>();
             Renderer = GetComponent<SpriteRenderer>();
             InputHandler = GetComponent<IInputHandler>();
+
+            _currentState = DefaultState;
         }
 
         private void Update()

@@ -57,9 +57,12 @@ namespace Player.Input
 			var worldFrom = _screenDepth.Convert(screenFrom, gameObject);
 			var worldTo = _screenDepth.Convert(screenTo, gameObject);
 			var verticalValue = (worldTo - worldFrom).y;
+			var horizontalValue = (worldTo - worldFrom).x;
 
 			if (Mathf.Sign(verticalValue) > 0 && Mathf.Abs(verticalValue) > minSwipeValueDetection)
 				InputActions.Enqueue(new JumpAction());
+			else if (Mathf.Sign(horizontalValue) < 0 && Mathf.Abs(horizontalValue) > minSwipeValueDetection)
+				InputActions.Enqueue(new Block());
 		}
 
 		private bool AngleIsValid(Vector2 vector)
