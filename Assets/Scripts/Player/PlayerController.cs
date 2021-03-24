@@ -50,20 +50,30 @@ namespace Player
         public override void DoAction(IAction action)
         {
             if (action is BasicAttack)
-            {
-                if (_onAttack)
-                {
-                    if (_attackSequenceNo >= maxAttackUnlock)
-                        return;
-                    
-                    _attackParamSequence.Enqueue(GetAttackParam(_attackSequenceNo++));
-                    return;
-                }
+                HandleAttackAction();
+        }
 
-                _onAttack = true;
-                Animator.SetTrigger(GetAttackParam(_attackSequenceNo++));
-                InputHandler.TemporaryStopMovement();
-            }
+        private void HandleAttackAction()
+        {
+            if (!_onAttack)
+                StartInitialAttack();
+            else
+                HandleChainingAttack();
+        }
+
+        private void HandleChainingAttack()
+        {
+            if (_attackSequenceNo >= maxAttackUnlock)
+                return;
+
+            _attackParamSequence.Enqueue(GetAttackParam(_attackSequenceNo++));
+        }
+
+        private void StartInitialAttack()
+        {
+            _onAttack = true;
+            Animator.SetTrigger(GetAttackParam(_attackSequenceNo++));
+            InputHandler.TemporaryStopMovement();
         }
 
         private int GetAttackParam(int attackSequenceNo)
