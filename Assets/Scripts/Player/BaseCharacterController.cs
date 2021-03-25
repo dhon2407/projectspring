@@ -1,6 +1,4 @@
-﻿using System;
-using Audio;
-using CustomHelper;
+﻿using Audio;
 using Managers;
 using Player.Input;
 using Player.Input.Action;
@@ -40,6 +38,7 @@ namespace Player
         protected GroundSensor GroundSensor;
         protected SpriteRenderer Renderer;
         protected IInputHandler InputHandler;
+        protected StaminaHandler Stamina;
 
         protected bool Grounded;
         protected bool Moving;
@@ -65,11 +64,23 @@ namespace Player
             } 
         }
 
+        public IAction CurrentAction { get; set; } = null;
+
         public int MoveDirection => _gameStarted ? InputHandler?.MovementDirection ?? 0 : 0;
 
         public abstract void Jump();
         public abstract void DoAction(IAction action);
         
+        public bool HasStamina(int requiredStamina)
+        {
+            return Stamina.HasStamina(requiredStamina);
+        }
+        
+        public bool ConsumeStamina(int requiredStamina)
+        {
+            return Stamina.Consume(requiredStamina);
+        }
+
         public virtual void OnJumpInvoke()
         {
             OnJump?.Invoke();
@@ -89,14 +100,20 @@ namespace Player
 
         private void Awake()
         {
+            InitializeComponents();
+            _currentState = DefaultState;
+
+            GameManager.OnGameStarted += GameStart;
+        }
+
+        private void InitializeComponents()
+        {
             Animator = GetComponent<Animator>();
             Rigidbody2D = GetComponent<Rigidbody2D>();
             GroundSensor = FindObjectOfType<GroundSensor>();
             Renderer = GetComponent<SpriteRenderer>();
             InputHandler = GetComponent<IInputHandler>();
-            _currentState = DefaultState;
-
-            GameManager.OnGameStarted += GameStart;
+            Stamina = GetComponentInChildren<StaminaHandler>();
         }
 
         private void OnDestroy()

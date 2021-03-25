@@ -11,11 +11,13 @@ namespace Player
         event BasicEvent OnGroundLand;
         bool OnGround { get; set; }
         IPlayerState CurrentState { get; set; }
+        IAction CurrentAction { get; set; }
         int MoveDirection { get; }
         void Jump();
         void OnJumpInvoke();
         void OnGroundLandInvoke();
         void OnRunStep();
         void DoAction(IAction action);
+        bool HasStamina(int requiredStamina);
     }
 }

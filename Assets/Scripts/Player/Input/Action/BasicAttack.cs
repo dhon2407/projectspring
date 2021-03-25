@@ -4,7 +4,10 @@
     {
         public void Execute(IPlayerController player)
         {
-            player.DoAction(this);
+            if (player.HasStamina(RequiredStamina))
+                player.DoAction(this);
         }
+
+        public int RequiredStamina => 30;
     }
 }

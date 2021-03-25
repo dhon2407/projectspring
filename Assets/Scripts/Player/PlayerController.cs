@@ -17,9 +17,9 @@ namespace Player
 
         public override void Jump()
         {
-            if (JumpRestrictions())
+            if (JumpRestrictions() || !Stamina.Consume(CurrentAction.RequiredStamina))
                 return;
-            
+
             Animator.SetTrigger(AnimParamJump);
             Grounded = false;
             Animator.SetBool(AnimParamGrounded, Grounded);
@@ -29,6 +29,7 @@ namespace Player
 
         public override void DoAction(IAction action)
         {
+            CurrentAction = action;
             if (action is BasicAttack)
                 HandleAttackAction();
             else if (action is Block)
@@ -59,7 +60,11 @@ namespace Player
         
         private void HandleBlock()
         {
-            if (!CurrentState.CanMoveTo<BlockState>()) return; 
+            if (!CurrentState.CanMoveTo<BlockState>())
+                return; 
+            
+            if (!Stamina.Consume(CurrentAction.RequiredStamina))
+                return;
             
             CurrentState = new BlockState();
             
@@ -76,6 +81,7 @@ namespace Player
             Animator.SetBool(AnimParamBlockLock, false);
             InputHandler.ResumeMovement();
             CurrentState = DefaultState;
+            CurrentAction = null;
         }
 
         #endregion
@@ -98,6 +104,9 @@ namespace Player
         {
             if (_attackParamSequence.Count > 0)
             {
+                if (!Stamina.Consume(CurrentAction.RequiredStamina))
+                    return;
+                
                 Animator.SetTrigger( _attackParamSequence.Dequeue());
                 return;
             }
@@ -106,6 +115,7 @@ namespace Player
             _onAttack = false;
             InputHandler.ResumeMovement();
             CurrentState = DefaultState;
+            CurrentAction = null;
         }
 
         private void HandleAttackAction()
@@ -142,6 +152,9 @@ namespace Player
 
         private void StartInitialAttack()
         {
+            if (!Stamina.Consume(CurrentAction.RequiredStamina))
+                return;
+            
             _onAttack = true;
             Animator.SetTrigger(GetAttackParam(_attackSequenceNo++));
             InputHandler.TemporaryStopMovement();
