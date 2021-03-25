@@ -22,6 +22,16 @@ namespace Player.Input
             resume.DelayInvoke(duration.Value, ResumeMovementTag);
         }
 
+        public override void Suspend(bool includingMovement, float? duration = null)
+        {
+            //TODO less priority
+        }
+
+        public override void CancelSuspend(bool includingMovement)
+        {
+            //TODO less priority
+        }
+
         public override void ResumeMovement()
         {
             Timing.KillCoroutines(ResumeMovementTag);

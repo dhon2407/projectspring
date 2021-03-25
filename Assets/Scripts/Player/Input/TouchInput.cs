@@ -26,6 +26,26 @@ namespace Player.Input
 			resume.DelayInvoke(duration.Value);
 		}
 
+		public override void Suspend(bool includingMovement, float? duration = null)
+		{
+			if (includingMovement)
+				_stopMovement = true;
+			
+			_tempDisabled = true;
+			if (!duration.HasValue) return;
+			
+			System.Action resume = ()=> CancelSuspend(includingMovement);
+			resume.DelayInvoke(duration.Value);
+		}
+
+		public override void CancelSuspend(bool includingMovement)
+		{
+			if (includingMovement)
+				_stopMovement = false;
+			
+			_tempDisabled = false;
+		}
+
 		public override void ResumeMovement()
 		{
 			_stopMovement = false;
@@ -34,6 +54,7 @@ namespace Player.Input
 		private LeanScreenDepth _screenDepth = new LeanScreenDepth(LeanScreenDepth.ConversionType.DepthIntercept);
 		private bool _stopMovement;
 		private bool _gameStarted;
+		private bool _tempDisabled;
 
 		private void Awake()
 		{
@@ -47,6 +68,7 @@ namespace Player.Input
 
 		private void GameStart()
 		{
+			_tempDisabled = false;
 			System.Action enable = () => _gameStarted = true;
 			enable.DelayInvoke(1f);
 		}
@@ -65,15 +87,15 @@ namespace Player.Input
 		
 		private void HandleFingerTap(LeanFinger finger)
 		{
-			if (!_gameStarted)
+			if (!_gameStarted || _tempDisabled)
 				return;
 			
-			InputActions.Enqueue(new BasicAttack());
+			EnqueueAction(new BasicAttack());
 		}
 
 		private void HandleSwipe(LeanFinger finger)
 		{
-			if (!_gameStarted)
+			if (!_gameStarted || _tempDisabled)
 				return;
 			
 			HandleFingerSwipe(finger.StartScreenPosition, finger.ScreenPosition);
@@ -89,9 +111,18 @@ namespace Player.Input
 			var horizontalValue = (worldTo - worldFrom).x;
 
 			if (Mathf.Sign(verticalValue) > 0 && Mathf.Abs(verticalValue) > minSwipeValueDetection)
-				InputActions.Enqueue(new JumpAction());
+				EnqueueAction(new JumpAction());
 			else if (Mathf.Sign(horizontalValue) < 0 && Mathf.Abs(horizontalValue) > minSwipeValueDetection)
-				InputActions.Enqueue(new Block());
+				EnqueueAction(new Block());
+		}
+
+		private void EnqueueAction(IAction action)
+		{
+			var actionType = action.GetType();
+			if (BlockActions.Contains(actionType))
+				return;
+			
+			InputActions.Enqueue(action);
 		}
 
 		private bool AngleIsValid(Vector2 vector)

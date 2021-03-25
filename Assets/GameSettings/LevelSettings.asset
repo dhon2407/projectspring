@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: LevelSettings
   m_EditorClassIdentifier: 
   segmentList:
-  - {fileID: 3047934119275173161, guid: b0e351eb6b16e3440b741672dfcf3194, type: 3}
   - {fileID: 4126186263011358429, guid: 2bcdd4bd98748ac408a490c461045406, type: 3}

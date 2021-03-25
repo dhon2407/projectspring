@@ -1,4 +1,5 @@
 ﻿using Audio;
+using Level.Obstacles;
 using Managers;
 using Player.Input;
 using Player.Input.Action;
@@ -39,6 +40,7 @@ namespace Player
         protected SpriteRenderer Renderer;
         protected IInputHandler InputHandler;
         protected StaminaHandler Stamina;
+        protected HitBox Hitbox;
 
         protected bool Grounded;
         protected bool Moving;
@@ -70,6 +72,7 @@ namespace Player
 
         public abstract void Jump();
         public abstract void DoAction(IAction action);
+        public abstract void HandleObstacleCollision(BaseObstacle obstacle);
         
         public bool HasStamina(int requiredStamina)
         {
@@ -114,11 +117,17 @@ namespace Player
             Renderer = GetComponent<SpriteRenderer>();
             InputHandler = GetComponent<IInputHandler>();
             Stamina = GetComponentInChildren<StaminaHandler>();
+            
+            Hitbox = GetComponent<HitBox>();
+            if (Hitbox)
+                Hitbox.OnHitObstacle += HandleObstacleCollision;
         }
 
         private void OnDestroy()
         {
             GameManager.OnGameStarted -= GameStart;
+            if (Hitbox)
+                Hitbox.OnHitObstacle -= HandleObstacleCollision;
         }
 
         protected virtual void GameStart()

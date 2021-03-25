@@ -1,4 +1,6 @@
-﻿using Player.Input.Action;
+﻿using System;
+using System.Collections.Generic;
+using Player.Input.Action;
 
 namespace Player.Input
 {
@@ -8,6 +10,9 @@ namespace Player.Input
         IAction CheckInputAction { get; }
         IAction ConsumeCurrentInputAction { get; }
         void TemporaryStopMovement(float? duration = null);
+        void Suspend(bool includingMovement, float? duration = null);
+        void CancelSuspend(bool includingMovement);
         void ResumeMovement();
+        List<Type> BlockActions { get; } 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Level.Obstacles;
 using Managers;
 using Player.Input.Action;
 using Player.States;
@@ -13,7 +14,25 @@ namespace Player
     [HideMonoScript]
     public class PlayerController : BaseCharacterController
     {
-        private readonly Queue<int> _attackParamSequence = new Queue<int>();
+        //TODO Move to other class / refactoring
+        #region TUTORIAL HANDLING
+        public void LockAllActions()
+        {
+            InputHandler.BlockActions.Add(typeof(JumpAction));
+            InputHandler.BlockActions.Add(typeof(BasicAttack));
+            InputHandler.BlockActions.Add(typeof(Block));
+        }
+        public void UnlockJump()
+        {
+            if (InputHandler.BlockActions.Contains(typeof(JumpAction)))
+                InputHandler.BlockActions.Remove(typeof(JumpAction));
+        }
+
+        #endregion
+        
+        
+        //TODO Move to other class / refactoring
+        #region JUMP HANDLING
 
         public override void Jump()
         {
@@ -23,9 +42,18 @@ namespace Player
             Animator.SetTrigger(AnimParamJump);
             Grounded = false;
             Animator.SetBool(AnimParamGrounded, Grounded);
-            Rigidbody2D.velocity = new Vector2(Rigidbody2D.velocity.x, Settings.Core.Settings.Player.baseJumpForce);
+            Rigidbody2D.velocity = new Vector2(Rigidbody2D.velocity.x, GameSettings.Player.baseJumpForce);
             GroundSensor.TemporaryDisable(0.2f);
         }
+        
+        private bool JumpRestrictions()
+        {
+            return !Grounded &&
+                   GameSettings.Player.disableMultipleJumps ||
+                   !CurrentState.CanJump;
+        }
+
+        #endregion
 
         public override void DoAction(IAction action)
         {
@@ -36,17 +64,23 @@ namespace Player
                 HandleBlock();
         }
 
+        public override void HandleObstacleCollision(BaseObstacle obstacle)
+        {
+            if (obstacle is GroundSpike)
+                Die();
+        }
+
+        private void Die()
+        {
+            Animator.SetBool(NoBlood,true);
+            Animator.SetTrigger(Death);
+            InputHandler.Suspend(true);
+        }
+
         protected override void GameStart()
         {
             base.GameStart();
             GameManager.SetPlayer(this);
-        }
-
-        private bool JumpRestrictions()
-        {
-            return !Grounded &&
-                   GameSettings.Player.disableMultipleJumps ||
-                   !CurrentState.CanJump;
         }
 
         //TODO Move to other class / refactoring
@@ -93,12 +127,16 @@ namespace Player
         [Range(1,3)]
         public int maxAttackUnlock = 1;
 
+        private readonly Queue<int> _attackParamSequence = new Queue<int>();
+        
         private static readonly int AnimParamBasicAttack1 = Animator.StringToHash("Attack1");
         private static readonly int AnimParamBasicAttack2 = Animator.StringToHash("Attack2");
         private static readonly int AnimParamBasicAttack3 = Animator.StringToHash("Attack3");
+        private static readonly int Death = Animator.StringToHash("Death");
 
         private int _attackSequenceNo = 0;
         private bool _onAttack;
+        private static readonly int NoBlood = Animator.StringToHash("noBlood");
 
         public void OnAttackComplete()
         {
