@@ -12,6 +12,8 @@ namespace Audio
         [FoldoutGroup("Player")] public SoundClip footStep;
         [FoldoutGroup("Player")] public SoundClip playerJump;
         [FoldoutGroup("Player")] public SoundClip playerLand;
+        [FoldoutGroup("Player")] public SoundClip swordSwoosh;
+        [FoldoutGroup("Destructibles")] public SoundClip destructibleDestroyed;
 
         [Serializable]
         public struct SoundClip

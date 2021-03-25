@@ -21,3 +21,9 @@ MonoBehaviour:
   playerLand:
     sound: Landing
     volume: 0.559
+  swordSwoosh:
+    sound: SwordSwoosh
+    volume: 0.248
+  destructibleDestroyed:
+    sound: crack
+    volume: 0.549

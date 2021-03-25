@@ -16,8 +16,8 @@ TagManager:
   - GroundDetector
   - LevelNearEnd
   - Obstacles
-  - 
-  - 
+  - Destructibles
+  - AttackArea
   - 
   - 
   - 

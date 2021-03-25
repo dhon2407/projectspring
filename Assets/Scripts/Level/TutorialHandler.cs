@@ -18,24 +18,48 @@ namespace Level
         private TutorialNotes message;
         [Required, SerializeField]
         private SegmentTrigger jumpPoint;
+        [Required, SerializeField]
+        private SegmentTrigger attackPoint;
 
         private void Start()
         {
             GameManager.OnGameStarted += RunTutorial;
             jumpPoint.OnTrigger += ExecuteJumpTutorial;
+            attackPoint.OnTrigger += ExecuteAttackTutorial;
+        }
+
+        private void ExecuteAttackTutorial()
+        {
+            attackPoint.OnTrigger -= ExecuteAttackTutorial;
+            player.OnStartAttack += OnStartAttack;
+            
+            message.Show("TAP TO ATTACK!");
+            Time.timeScale = 0.05f;
+            player.UnlockAttack();
+        }
+
+        private void OnStartAttack()
+        {
+            player.OnStartAttack -= OnStartAttack;
+            Time.timeScale = 1;
+            message.Hide();
         }
 
         private void ExecuteJumpTutorial()
         {
-            player.OnJump += () =>
-            {
-                Time.timeScale = 1;
-                message.Hide();
-            };
+            jumpPoint.OnTrigger -= ExecuteJumpTutorial;
+            player.OnStartJump += OnStartJump;
             
             message.Show("SWIPE UP TO JUMP!");
             Time.timeScale = 0.3f;
             player.UnlockJump();
+        }
+
+        private void OnStartJump()
+        {
+            player.OnStartJump -= OnStartJump;
+            Time.timeScale = 1;
+            message.Hide();
         }
 
         private void RunTutorial()

@@ -12,6 +12,8 @@ namespace Audio
         public UnityEvent OnFootStep { get; } = new UnityEvent();
         public UnityEvent OnPlayerLand { get; } = new UnityEvent();
         public UnityEvent OnPlayerJump { get; } = new UnityEvent();
+        public UnityEvent OnSwordSwoosh { get; } = new UnityEvent();
+        public UnityEvent OnDestructibleDestroy { get; } = new UnityEvent();
 
 
         public class AudioEventBool : UnityEvent<bool> {}

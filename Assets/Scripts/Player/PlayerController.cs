@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Audio;
 using Level.Obstacles;
 using Managers;
 using Player.Input.Action;
@@ -28,17 +29,25 @@ namespace Player
                 InputHandler.BlockActions.Remove(typeof(JumpAction));
         }
 
+        public void UnlockAttack()
+        {
+            if (InputHandler.BlockActions.Contains(typeof(BasicAttack)))
+                InputHandler.BlockActions.Remove(typeof(BasicAttack));
+        }
+
         #endregion
         
         
         //TODO Move to other class / refactoring
         #region JUMP HANDLING
 
+        public event BasicEvent OnStartJump;
         public override void Jump()
         {
             if (JumpRestrictions() || !Stamina.Consume(CurrentAction.RequiredStamina))
                 return;
 
+            OnStartJump?.Invoke();
             Animator.SetTrigger(AnimParamJump);
             Grounded = false;
             Animator.SetBool(AnimParamGrounded, Grounded);
@@ -122,6 +131,8 @@ namespace Player
 
         //TODO Move to other class / refactoring
         #region ATTACK HANDLING
+
+        public event BasicEvent OnStartAttack;
         
         //TODO Adjustable somewhere
         [Range(1,3)]
@@ -143,8 +154,13 @@ namespace Player
             if (_attackParamSequence.Count > 0)
             {
                 if (!Stamina.Consume(CurrentAction.RequiredStamina))
+                {
+                    InputHandler.ResumeMovement();
                     return;
-                
+                }
+
+                OnStartAttack?.Invoke();
+                Sounds.Event.OnSwordSwoosh.Invoke();
                 Animator.SetTrigger( _attackParamSequence.Dequeue());
                 return;
             }
@@ -194,6 +210,8 @@ namespace Player
                 return;
             
             _onAttack = true;
+            OnStartAttack?.Invoke();
+            Sounds.Event.OnSwordSwoosh.Invoke();
             Animator.SetTrigger(GetAttackParam(_attackSequenceNo++));
             InputHandler.TemporaryStopMovement();
         }
