@@ -13,6 +13,8 @@ namespace Player.Input
         void Suspend(bool includingMovement, float? duration = null);
         void CancelSuspend(bool includingMovement);
         void ResumeMovement();
-        List<Type> BlockActions { get; } 
+        void BlockActions(Type actionType);
+        void UnblockActions(Type actionType);
+
     }
 }

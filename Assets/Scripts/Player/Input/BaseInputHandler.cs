@@ -11,9 +11,11 @@ namespace Player.Input
         public abstract void TemporaryStopMovement(float? duration);
         public abstract void Suspend(bool includingMovement, float? duration = null);
         public abstract void CancelSuspend(bool includingMovement);
-
         public abstract void ResumeMovement();
-        public List<Type> BlockActions { get; } = new List<Type>();
+        public abstract void BlockActions(Type actionType);
+        public abstract void UnblockActions(Type actionType);
+
+        protected List<Type> BlockedActions { get; } = new List<Type>();
 
         public IAction CheckInputAction => InputActions.Count <= 0 ? null : InputActions.Peek();
         public IAction ConsumeCurrentInputAction

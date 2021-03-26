@@ -1,4 +1,5 @@
-﻿using MEC;
+﻿using System;
+using MEC;
 using Player.Input.Action;
 using UnityEngine;
 using Utilities.Helpers;
@@ -36,6 +37,16 @@ namespace Player.Input
         {
             Timing.KillCoroutines(ResumeMovementTag);
             pauseMovement = false;
+        }
+
+        public override void BlockActions(Type actionType)
+        {
+            //TODO less priority
+        }
+
+        public override void UnblockActions(Type actionType)
+        {
+            //TODO less priority
         }
 
         private void Update()

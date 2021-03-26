@@ -18,8 +18,8 @@ TagManager:
   - Obstacles
   - Destructibles
   - AttackArea
-  - 
-  - 
+  - Enemy
+  - TutorialPoints
   - 
   - 
   - 

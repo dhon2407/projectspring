@@ -19,21 +19,13 @@ namespace Player
         #region TUTORIAL HANDLING
         public void LockAllActions()
         {
-            InputHandler.BlockActions.Add(typeof(JumpAction));
-            InputHandler.BlockActions.Add(typeof(BasicAttack));
-            InputHandler.BlockActions.Add(typeof(Block));
+            InputHandler.BlockActions(typeof(JumpAction));
+            InputHandler.BlockActions(typeof(BasicAttack));
+            InputHandler.BlockActions(typeof(Block));
         }
-        public void UnlockJump()
-        {
-            if (InputHandler.BlockActions.Contains(typeof(JumpAction)))
-                InputHandler.BlockActions.Remove(typeof(JumpAction));
-        }
-
-        public void UnlockAttack()
-        {
-            if (InputHandler.BlockActions.Contains(typeof(BasicAttack)))
-                InputHandler.BlockActions.Remove(typeof(BasicAttack));
-        }
+        public void UnlockJump() => InputHandler.UnblockActions(typeof(JumpAction));
+        public void UnlockAttack() => InputHandler.UnblockActions(typeof(BasicAttack));
+        public void UnlockBlock() => InputHandler.UnblockActions(typeof(Block));
 
         #endregion
         
@@ -97,9 +89,18 @@ namespace Player
         
         //TODO Adjustable somewhere
         public float blockDuration = 3f;
+        
+        public event BasicEvent OnStartBlock;
 
         private static readonly int AnimParamBlock = Animator.StringToHash("Block");
         private static readonly int AnimParamBlockLock = Animator.StringToHash("IdleBlock");
+        private static readonly int AnimParamBlockHit = Animator.StringToHash("SuccessBlock");
+
+        public void OnSuccessBlock()
+        {
+            Sounds.Event.OnShieldHit.Invoke();
+            Animator.SetTrigger(AnimParamBlockHit);
+        }
         
         private void HandleBlock()
         {
@@ -111,6 +112,7 @@ namespace Player
             
             CurrentState = new BlockState();
             
+            OnStartBlock?.Invoke();
             Animator.SetBool(AnimParamBlockLock, true);
             Animator.SetTrigger(AnimParamBlock);
             InputHandler.TemporaryStopMovement();
@@ -155,7 +157,7 @@ namespace Player
             {
                 if (!Stamina.Consume(CurrentAction.RequiredStamina))
                 {
-                    InputHandler.ResumeMovement();
+                    EndAttackMode();
                     return;
                 }
 
@@ -164,7 +166,12 @@ namespace Player
                 Animator.SetTrigger( _attackParamSequence.Dequeue());
                 return;
             }
-            
+
+            EndAttackMode();
+        }
+
+        private void EndAttackMode()
+        {
             _attackSequenceNo = 0;
             _onAttack = false;
             InputHandler.ResumeMovement();

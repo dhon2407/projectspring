@@ -13,6 +13,7 @@ namespace Audio
         public UnityEvent OnPlayerLand { get; } = new UnityEvent();
         public UnityEvent OnPlayerJump { get; } = new UnityEvent();
         public UnityEvent OnSwordSwoosh { get; } = new UnityEvent();
+        public UnityEvent OnShieldHit { get; } = new UnityEvent();
         public UnityEvent OnDestructibleDestroy { get; } = new UnityEvent();
 
 

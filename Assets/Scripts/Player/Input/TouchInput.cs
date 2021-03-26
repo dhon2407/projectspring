@@ -1,4 +1,5 @@
-﻿using Lean.Touch;
+﻿using System;
+using Lean.Touch;
 using Managers;
 using Player.Input.Action;
 using UnityEngine;
@@ -49,6 +50,18 @@ namespace Player.Input
 		public override void ResumeMovement()
 		{
 			_stopMovement = false;
+		}
+
+		public override void BlockActions(Type actionType)
+		{
+			if (!BlockedActions.Contains(actionType))
+				BlockedActions.Add(actionType);
+		}
+
+		public override void UnblockActions(Type actionType)
+		{
+			if (BlockedActions.Contains(actionType))
+				BlockedActions.Remove(actionType);
 		}
 
 		private LeanScreenDepth _screenDepth = new LeanScreenDepth(LeanScreenDepth.ConversionType.DepthIntercept);
@@ -119,7 +132,7 @@ namespace Player.Input
 		private void EnqueueAction(IAction action)
 		{
 			var actionType = action.GetType();
-			if (BlockActions.Contains(actionType))
+			if (BlockedActions.Contains(actionType))
 				return;
 			
 			InputActions.Enqueue(action);

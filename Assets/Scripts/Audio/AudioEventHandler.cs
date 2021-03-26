@@ -22,6 +22,7 @@ namespace Audio
             _audioEvents.OnPlayerLand.AddListener(OnPlayerLand);
             _audioEvents.OnPlayerJump.AddListener(OnPlayerJump);
             _audioEvents.OnSwordSwoosh.AddListener(OnSwordSwoosh);
+            _audioEvents.OnShieldHit.AddListener(OnShieldHit);
             _audioEvents.OnDestructibleDestroy.AddListener(OnDestructibleDestroy);
         }
 
@@ -29,6 +30,7 @@ namespace Audio
         private void OnPlayerLand() => Sounds.Play(SAudio.playerLand);
         private void OnPlayerJump() => Sounds.Play(SAudio.playerJump);
         private void OnSwordSwoosh() => Sounds.Play(SAudio.swordSwoosh);
+        private void OnShieldHit() => Sounds.Play(SAudio.shieldHit);
         private void OnDestructibleDestroy() => Sounds.Play(SAudio.destructibleDestroyed);
     }
 }

@@ -1,8 +1,7 @@
 using System;
-using System.Collections.Generic;
 using Managers;
-using MEC;
 using Player;
+using Player.Enemy;
 using Sirenix.OdinInspector;
 using UI;
 using UnityEngine;
@@ -20,12 +19,54 @@ namespace Level
         private SegmentTrigger jumpPoint;
         [Required, SerializeField]
         private SegmentTrigger attackPoint;
+        [Required, SerializeField]
+        private SegmentTrigger blockPoint1;
+        [Required, SerializeField]
+        private SegmentTrigger blockPoint2;
+        [Required, SerializeField]
+        private TutorialEnemy banditToBlock;
 
         private void Start()
         {
             GameManager.OnGameStarted += RunTutorial;
             jumpPoint.OnTrigger += ExecuteJumpTutorial;
             attackPoint.OnTrigger += ExecuteAttackTutorial;
+            blockPoint1.OnTrigger += PrepareBlockTutorial;
+            blockPoint2.OnTrigger += ExecuteBlockTutorial;
+        }
+
+        private void PrepareBlockTutorial()
+        {
+            blockPoint1.OnTrigger -= PrepareBlockTutorial;
+            player.LockAllActions();
+        }
+        
+        private void ExecuteBlockTutorial()
+        {
+            banditToBlock.Attack();
+            blockPoint2.OnTrigger -= ExecuteBlockTutorial;
+            player.OnStartBlock += OnStartBlock;
+            message.Show("SWIPE LEFT TO BLOCK!");
+            Time.timeScale = 0.01f;
+            player.UnlockBlock();
+        }
+
+        private void OnStartBlock()
+        {
+            player.OnStartBlock -= OnStartBlock;
+            message.Hide();
+            player.UnlockAttack();
+            player.UnlockJump();
+            Time.timeScale = 1;
+
+            Action successBlock = OnBlock;
+            successBlock.DelayInvoke(0.3f);
+        }
+
+        private void OnBlock()
+        {
+            banditToBlock.ThrowOff();
+            player.OnSuccessBlock();
         }
 
         private void ExecuteAttackTutorial()
@@ -35,12 +76,14 @@ namespace Level
             
             message.Show("TAP TO ATTACK!");
             Time.timeScale = 0.05f;
+            player.LockAllActions();
             player.UnlockAttack();
         }
 
         private void OnStartAttack()
         {
             player.OnStartAttack -= OnStartAttack;
+            player.UnlockJump();
             Time.timeScale = 1;
             message.Hide();
         }
