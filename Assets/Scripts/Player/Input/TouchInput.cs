@@ -10,7 +10,7 @@ namespace Player.Input
 	public class TouchInput : BaseInputHandler
 	{
 		[SerializeField]
-		private float requiredAngle;
+		private float requiredAngle = 0;
 		[SerializeField]
 		private float requiredArc = -1.0f;
 		[SerializeField]

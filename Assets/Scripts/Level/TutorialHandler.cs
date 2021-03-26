@@ -12,19 +12,19 @@ namespace Level
     public class TutorialHandler : MonoBehaviour
     {
         [Required, SerializeField]
-        private PlayerController player;
+        private PlayerController player = null;
         [Required, SerializeField]
-        private TutorialNotes message;
+        private TutorialNotes message = null;
         [Required, SerializeField]
-        private SegmentTrigger jumpPoint;
+        private SegmentTrigger jumpPoint = null;
         [Required, SerializeField]
-        private SegmentTrigger attackPoint;
+        private SegmentTrigger attackPoint = null;
         [Required, SerializeField]
-        private SegmentTrigger blockPoint1;
+        private SegmentTrigger blockPoint1 = null;
         [Required, SerializeField]
-        private SegmentTrigger blockPoint2;
+        private SegmentTrigger blockPoint2 = null;
         [Required, SerializeField]
-        private TutorialEnemy banditToBlock;
+        private TutorialEnemy banditToBlock = null;
 
         private void Start()
         {

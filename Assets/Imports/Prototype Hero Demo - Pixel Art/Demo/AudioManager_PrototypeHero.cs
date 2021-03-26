@@ -43,7 +43,7 @@ public class AudioManager_PrototypeHero : MonoBehaviour
     public static AudioManager_PrototypeHero instance;
 
     [SerializeField]
-    Sound[] m_sounds;
+    Sound[] m_sounds = null;
 
     private void Awake()
     {

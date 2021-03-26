@@ -9,7 +9,7 @@ namespace UI.Player
     public class StaminaIndicator : MonoBehaviour
     {
         [Required, SerializeField]
-        private Transform barTransform;
+        private Transform barTransform = null;
 
         public float Value
         {

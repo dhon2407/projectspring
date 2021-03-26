@@ -5,8 +5,8 @@ using System;
 public class ColorSwap_HeroKnight : MonoBehaviour
 {
     // Accessable in Editor
-    [SerializeField] Color[] m_sourceColors;
-    [SerializeField] Color[] m_newColors;
+    [SerializeField] Color[] m_sourceColors = null;
+    [SerializeField] Color[] m_newColors = null;
 
     // Private member variables
     Texture2D m_colorSwapTex;

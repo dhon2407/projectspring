@@ -8,9 +8,9 @@ public class PrototypeHeroDemo : MonoBehaviour {
     [SerializeField] float      m_jumpForce = 7.5f;
     [SerializeField] bool       m_hideSword = false;
     [Header("Effects")]
-    [SerializeField] GameObject m_RunStopDust;
-    [SerializeField] GameObject m_JumpDust;
-    [SerializeField] GameObject m_LandingDust;
+    [SerializeField] GameObject m_RunStopDust = null;
+    [SerializeField] GameObject m_JumpDust = null;
+    [SerializeField] GameObject m_LandingDust = null;
 
     private Animator            m_animator;
     private Rigidbody2D         m_body2d;

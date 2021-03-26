@@ -32,6 +32,5 @@ namespace Player.Input
         }
 
         protected readonly Queue<IAction> InputActions = new Queue<IAction>();
-        private IInputHandler _inputHandlerImplementation;
     }
 }

@@ -5,11 +5,11 @@ namespace Environment
     public class ParallaxBackground : MonoBehaviour {
 
         [SerializeField]
-        private Vector2 parallaxEffectMultiplier;
+        private Vector2 parallaxEffectMultiplier = Vector2.one;
         [SerializeField]
-        private bool infiniteHorizontal;
+        private bool infiniteHorizontal = false;
         [SerializeField]
-        private bool infiniteVertical;
+        private bool infiniteVertical = false;
 
         private Transform _transform;
         private Transform _cameraTransform;

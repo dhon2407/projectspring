@@ -10,11 +10,11 @@ namespace Level
     public sealed class LevelSegmentHandler : MonoBehaviour
     {
         [Required, SerializeField]
-        private Transform endPoint;
+        private Transform endPoint = null;
         [Required, SerializeField]
-        private SegmentTrigger nearEndTrigger;
+        private SegmentTrigger nearEndTrigger = null;
         [Required, SerializeField]
-        private SegmentTrigger startingTrigger;
+        private SegmentTrigger startingTrigger = null;
 
         public delegate void LevelSegmentEndingEvent(LevelSegmentHandler segmentOwner, Transform endPoint);
         public delegate void LevelSegmentStaringEvent(LevelSegmentHandler segmentOwner);
