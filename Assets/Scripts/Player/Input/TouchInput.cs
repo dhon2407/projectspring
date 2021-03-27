@@ -72,11 +72,20 @@ namespace Player.Input
 		private void Awake()
 		{
 			GameManager.OnGameStarted += GameStart;
+			GameManager.OnReplayGame += ReplayGame;
+		}
+
+		private void ReplayGame()
+		{
+			CancelSuspend(true);
+			_gameStarted = false;
+			_tempDisabled = false;
 		}
 
 		private void OnDestroy()
 		{
 			GameManager.OnGameStarted -= GameStart;
+			GameManager.OnReplayGame -= ReplayGame;
 		}
 
 		private void GameStart()

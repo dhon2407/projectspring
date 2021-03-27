@@ -76,6 +76,10 @@ namespace Player
             Animator.SetBool(NoBlood,true);
             Animator.SetTrigger(Death);
             InputHandler.Suspend(true);
+            ResetAttackParameters();
+            
+            Action gameEnd = GameManager.GameEnd;
+            gameEnd.DelayInvoke(1f);
         }
 
         protected override void GameStart()
@@ -172,9 +176,14 @@ namespace Player
 
         private void EndAttackMode()
         {
+            ResetAttackParameters();
+            InputHandler.ResumeMovement();
+        }
+
+        private void ResetAttackParameters()
+        {
             _attackSequenceNo = 0;
             _onAttack = false;
-            InputHandler.ResumeMovement();
             CurrentState = DefaultState;
             CurrentAction = null;
         }

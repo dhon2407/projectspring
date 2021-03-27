@@ -29,10 +29,26 @@ namespace Level
         private void Start()
         {
             GameManager.OnGameStarted += RunTutorial;
+            GameManager.OnReplayGame += ReplayGame;
             jumpPoint.OnTrigger += ExecuteJumpTutorial;
             attackPoint.OnTrigger += ExecuteAttackTutorial;
             blockPoint1.OnTrigger += PrepareBlockTutorial;
             blockPoint2.OnTrigger += ExecuteBlockTutorial;
+        }
+
+        private void OnDestroy()
+        {
+            GameManager.OnGameStarted -= RunTutorial;
+            GameManager.OnReplayGame -= ReplayGame;
+            jumpPoint.OnTrigger -= ExecuteJumpTutorial;
+            attackPoint.OnTrigger -= ExecuteAttackTutorial;
+            blockPoint1.OnTrigger -= PrepareBlockTutorial;
+            blockPoint2.OnTrigger -= ExecuteBlockTutorial;
+        }
+        
+        private void ReplayGame()
+        {
+            Destroy(this);
         }
 
         private void PrepareBlockTutorial()

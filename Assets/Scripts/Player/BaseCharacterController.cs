@@ -69,7 +69,7 @@ namespace Player
         public IAction CurrentAction { get; set; } = null;
 
         public int MoveDirection => _gameStarted ? InputHandler?.MovementDirection ?? 0 : 0;
-
+        
         public abstract void Jump();
         public abstract void DoAction(IAction action);
         public abstract void HandleObstacleCollision(BaseObstacle obstacle);
@@ -107,6 +107,7 @@ namespace Player
             _currentState = DefaultState;
 
             GameManager.OnGameStarted += GameStart;
+            GameManager.OnReplayGame += ResetGame;
         }
 
         private void InitializeComponents()
@@ -126,8 +127,17 @@ namespace Player
         private void OnDestroy()
         {
             GameManager.OnGameStarted -= GameStart;
+            GameManager.OnReplayGame -= ResetGame;
+            
             if (Hitbox)
                 Hitbox.OnHitObstacle -= HandleObstacleCollision;
+        }
+
+        protected virtual void ResetGame()
+        {
+            _gameStarted = false;
+            Animator.Rebind();
+            Animator.Update(0f);
         }
 
         protected virtual void GameStart()

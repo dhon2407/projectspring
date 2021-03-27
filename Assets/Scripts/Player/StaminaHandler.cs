@@ -74,11 +74,20 @@ namespace Player
         {
             _indicator = GetComponent<StaminaIndicator>();
             GameManager.OnGameStarted += StartRecovery;
+            GameManager.OnReplayGame += ReplayGame;
+        }
+
+        private void ReplayGame()
+        {
+            StopAllCoroutines();
+            _currentStamina = 100;
+
         }
 
         private void OnDestroy()
         {
             GameManager.OnGameStarted -= StartRecovery;
+            GameManager.OnReplayGame -= ReplayGame;
         }
 
         private void StartRecovery()

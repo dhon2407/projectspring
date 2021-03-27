@@ -1,8 +1,10 @@
 ﻿using System;
+using CustomHelper;
 using Lean.Touch;
 using Managers.Core;
 using Player;
 using UnityEngine;
+using Utilities.Helpers;
 
 namespace Managers
 {
@@ -12,14 +14,20 @@ namespace Managers
 
         public delegate void BasicEvent();
         public delegate void DistanceChangeEvent(int value);
+        public delegate void TimedEvent(float value);
 
         public static event BasicEvent OnGameStarted;
         public static event BasicEvent OnGameEnded;
+        public static event BasicEvent OnReplayGame;
+        public static event TimedEvent OnReplayGameReadyIn;
         public static event DistanceChangeEvent OnDistanceUpdate;
 
         #endregion
-
-        private static float DistanceTraveled
+        
+        public static float DistancePersonalRecord { get; set; }
+        public static Vector3 PlayerSpawnPosition { get; private set; }
+        
+        public static float DistanceTraveled
         {
             get => _distanceTraveled;
             set
@@ -36,15 +44,44 @@ namespace Managers
 
         private bool _gameStarted;
         
+        public static void GameEnd()
+        {
+            OnGameEnded?.Invoke();
+        }
+
+        public static float UpdateRecord()
+        {
+            DistancePersonalRecord =
+                DistanceTraveled > DistancePersonalRecord ? DistanceTraveled : DistancePersonalRecord;
+
+            return DistancePersonalRecord;
+        }
+
+        public static void PlayAgain()
+        {
+            var delayStart = 1f;
+
+            Instance.Log($"Replaying game in {delayStart} second{(delayStart > 1 ? "s" : "")}.");
+            _currentPlayer.transform.position = PlayerSpawnPosition;
+            
+            OnReplayGame?.Invoke();
+            OnReplayGameReadyIn?.Invoke(delayStart);
+
+            Action resume = Instance.Init;
+            resume.DelayInvoke(delayStart);
+        }
+        
         public static void SetPlayer(PlayerController player)
         {
             _currentPlayer = player;
             _startingPosition = _currentPlayer.transform.position;
+            PlayerSpawnPosition = _startingPosition;
         }
         
         protected override void Init()
         {
             LeanTouch.OnFingerTap += HandleFingerTap;
+            _gameStarted = false;
         }
 
         private void LateUpdate()
@@ -63,7 +100,11 @@ namespace Managers
         private void HandleFingerTap(LeanFinger finger)
         {
             if (!_gameStarted)
+            {
+                this.Log("Starting game..");
+                LeanTouch.OnFingerTap -= HandleFingerTap;
                 OnGameStartedInvoke();
+            }
         }
         
         private static void OnGameStartedInvoke()
@@ -73,11 +114,6 @@ namespace Managers
             OnGameStarted?.Invoke();
         }
 
-        private static void OnGameEndedInvoke()
-        {
-            OnGameEnded?.Invoke();
-        }
-        
         private static void OnDistanceUpdateInvoke(int value)
         {
             OnDistanceUpdate?.Invoke(value);
@@ -95,7 +131,7 @@ namespace Managers
             set => _instance = value;
             get => _instance;
         }
-
+        
         #endregion
     }
 }
