@@ -18,10 +18,15 @@ namespace Managers
 
             var nextSegmentRef = Settings.Core.Settings.Level.GetNextSegment();
             segmentOwner.OnLevelSegmentEnding -= SegmentEnding;
+            
             var nextSegment = Instantiate(nextSegmentRef, endPoint.position,
                 Quaternion.identity);
             nextSegment.name = $"{nextSegmentRef.name} - {_levelSegmentGenerated}";
-            nextSegment.OnLevelSegmentStarting += owner => segmentOwner.DestroySelf();
+            nextSegment.OnLevelSegmentStarting += owner =>
+            {
+                if (segmentOwner != null)
+                    segmentOwner.DestroySelf();
+            };
         }
 
         protected override void Init()
