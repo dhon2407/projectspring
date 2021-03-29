@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "697451015259",
+    "firebase_url": "https://projectspring-0001p-default-rtdb.firebaseio.com",
+    "project_id": "projectspring-0001p",
+    "storage_bucket": "projectspring-0001p.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:697451015259:android:7844996fcd624d922aa37e",
+        "android_client_info": {
+          "package_name": "com.DMGradientGames.ProjectSpring"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "697451015259-8v5t17f5hekv14r6ritvb3cvu3pnu03o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMPQ3tMs8ScCOTc8A83c7VFWDyElscSuQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "697451015259-8v5t17f5hekv14r6ritvb3cvu3pnu03o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
