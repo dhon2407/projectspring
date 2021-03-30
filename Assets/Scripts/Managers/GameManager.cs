@@ -53,6 +53,8 @@ namespace Managers
         {
             DistancePersonalRecord =
                 DistanceTraveled > DistancePersonalRecord ? DistanceTraveled : DistancePersonalRecord;
+            
+            LeaderBoardManager.SaveScore(_currentPlayer.playerName, (int)DistancePersonalRecord);
 
             return DistancePersonalRecord;
         }

@@ -16,6 +16,7 @@ namespace Player
     public class PlayerController : BaseCharacterController
     {
         //TODO Move to other class / refactoring
+        public string playerName = "SwordsMan";
         #region TUTORIAL HANDLING
         public void LockAllActions()
         {

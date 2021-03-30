@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using CustomHelper;
+using Data.Database;
 using Firebase;
 using Firebase.Auth;
 using Managers.Core;
@@ -14,14 +17,14 @@ namespace Managers
 
         protected override void Init()
         {
-            SetupDatabase();
+            _database = GetComponent<IDatabaseHandler>();
+            _database.Setup();
         }
 
         private static LeaderBoardManager Instance =>
             _instance ? _instance : throw new UnityException($"No instance of {nameof(LeaderBoardManager)}");
 
         private static LeaderBoardManager _instance;
-        private FirebaseAuth _auth;
 
         protected override LeaderBoardManager Self
         {
@@ -30,92 +33,38 @@ namespace Managers
         }
 
         #endregion
+        
+        private IDatabaseHandler _database;
 
-        [Button(ButtonSizes.Large)]
-        private void ForceLogin(string userName)
+        public static void SaveScore(string name, int score)
         {
-            StartCoroutine(Login(userName, "123456"));
+            Instance.UpdateScore(name, score);
         }
 
-        private void SetupDatabase()
+        public static void FetchHighScore(Action<int> highScoreCallback)
         {
-            FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
-            {
-                var dependencyStatus = task.Result;
-                if (dependencyStatus == DependencyStatus.Available)
-                    InitializeFirebase();
-                else
-                    Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyStatus);
-            });
+            Instance.GetHighScore(highScoreCallback);
         }
 
-        private void InitializeFirebase()
+        public static List<(string, int)> GetScores()
         {
-            _auth = FirebaseAuth.DefaultInstance;
-            this.Log($"Firebase initialized. {(_auth != null ? "OK" :"NG")}");
+            throw new System.NotImplementedException();
         }
-
-        private IEnumerator Login(string userName, string password)
+        
+        private void UpdateScore(string nameLabel, int score)
         {
-            var email = $"{userName}@{SystemInfo.deviceUniqueIdentifier}.{Application.productName}";
-            var loginTask = _auth.SignInWithEmailAndPasswordAsync(email, password);
-            yield return new WaitUntil(() => loginTask.IsCompleted);
+            void LoginAction(OperationResult result)
+            {
+                if (result == OperationResult.Success)
+                    _database.SaveScore(nameLabel, score);
+            }
 
-            if (loginTask.Exception != null)
-            {
-                this.Log(message: $"Failed to register task with {loginTask.Exception}");
-                var firebaseEx = loginTask.Exception.GetBaseException() as FirebaseException;
-                var errorCode = (AuthError) firebaseEx.ErrorCode;
-                
-                if (errorCode == AuthError.UserNotFound)
-                {
-                    this.Log($"Creating new user {email}");
-                    yield return CreateLogin(userName, email, password);
-                }
-                else
-                    this.Log($"Login error : {errorCode}");
-            }
-            else
-            {
-                var user = loginTask.Result;
-                this.Log($"User signed in successfully: {user.DisplayName} ({user.Email})");
-            }
+            _database.Login(nameLabel, LoginAction);
         }
-
-        private IEnumerator CreateLogin(string username, string email, string password)
+        
+        private void GetHighScore(Action<int> highScoreCallback)
         {
-            var registerTask = _auth.CreateUserWithEmailAndPasswordAsync(email, password);
-            yield return new WaitUntil(() => registerTask.IsCompleted);
-
-            if (registerTask.Exception != null)
-            {
-                Debug.LogWarning(message: $"Failed to register task with {registerTask.Exception}");
-                FirebaseException firebaseEx = registerTask.Exception.GetBaseException() as FirebaseException;
-                AuthError errorCode = (AuthError) firebaseEx.ErrorCode;
-
-                this.Log($"Register error : {errorCode}");
-            }
-            else
-            {
-                var user = registerTask.Result;
-
-                if (user != null)
-                {
-                    var profile = new UserProfile {DisplayName = username};
-
-                    var profileTask = user.UpdateUserProfileAsync(profile);
-                    yield return new WaitUntil(() => profileTask.IsCompleted);
-
-                    if (profileTask.Exception != null)
-                        Debug.LogWarning(message: $"Failed to register task with {profileTask.Exception}");
-                    else
-                        this.Log($"Register {email} successful.");
-                }
-                else
-                {
-                    this.Log($"No register task result.");
-                }
-            }
+            _database.FetchHighScore(highScoreCallback);
         }
     }
 }
