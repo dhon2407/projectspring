@@ -13,18 +13,20 @@ namespace UI
     public class GameOver : MonoBehaviour
     {
         [Required, SerializeField]
-        private GameObject mainMessage;
+        private GameObject mainMessage = null;
         [Required, SerializeField]
-        private GameObject playAgainMessage;
+        private GameObject playAgainMessage = null;
         [Required, SerializeField]
-        private CanvasGroup blackCurtain;
+        private CanvasGroup blackCurtain = null;
         [Required, SerializeField]
-        private LeaderBoard leaderBoard;
+        private LeaderBoard leaderBoard = null;
         
         private CanvasGroup _canvasGroup;
         private EndGameDistanceHandler _distance;
         private EndGamePersonalRecord _personalRecord;
         private bool _readyToRestart;
+        private float _distanceCovered;
+        private float _currentRecord;
 
         private void Awake()
         {
@@ -65,6 +67,7 @@ namespace UI
         private void ResetAppearance()
         {
             _personalRecord.Hide();
+            leaderBoard.Hide();
             mainMessage.SetActive(false);
             playAgainMessage.SetActive(false);
             _distance.Hide();
@@ -92,30 +95,34 @@ namespace UI
 
         private void ShowDistanceSummary()
         {
+            SetupScores();
             _distance.Show((int)GameManager.DistanceTraveled, ShowRecord);
+        }
+
+        private void SetupScores()
+        {
+            _distanceCovered = GameManager.DistanceTraveled;
+            _currentRecord = GameManager.DistancePersonalRecord;
+            GameManager.UpdateRecord();
         }
 
         private void ShowRecord()
         {
-            var distance = GameManager.DistanceTraveled;
-            var currentRecord = GameManager.DistancePersonalRecord;
-            _personalRecord.Show((int)distance, (int)currentRecord);
-            GameManager.UpdateRecord();
-            
+            _personalRecord.Show((int)_distanceCovered, (int)_currentRecord);
             LeaderBoardManager.GetScores(HighScoresLoaded);
 
             Action playAgain = CanPlayAgain;
             playAgain.DelayInvoke(3f);
         }
 
-        private void HighScoresLoaded(List<(string, int)> scores)
+        private void HighScoresLoaded(List<(string, int)> scores, int rank)
         {
             Action action = () =>
             {
                 _distance.Hide();
                 _personalRecord.Hide();
                 mainMessage.SetActive(false);
-                leaderBoard.Show(scores);
+                leaderBoard.Show(scores, rank);
             };
             
             action.DelayInvoke(2f);

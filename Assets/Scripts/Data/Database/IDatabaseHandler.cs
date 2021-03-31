@@ -10,7 +10,7 @@ namespace Data.Database
         void Login(string nameLabel, Action<OperationResult> resultAction = null);
         void SaveScore(string nameLabel, int score, Action<OperationResult> resultAction = null);
         void FetchHighScore(Action<int> highScore);
-        void FetchLeaderBoards(Action<List<(string, int)>> scoreCallback);
+        void FetchLeaderBoards(Action<List<(string, int)>, int> scoreCallback);
         void Setup();
     }
 }

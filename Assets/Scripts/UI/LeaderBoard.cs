@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CustomHelper;
 using DG.Tweening;
 using UnityEngine;
 
@@ -11,13 +12,16 @@ namespace UI
 
         private CanvasGroup _canvasGroup;
 
-        public void Show(List<(string playerName, int score)> scores)
+        public void Show(List<(string playerName, int score)> scores, int currentScoreRank = 0)
         {
             ClearItems();
+            var currentRank = 1;
             foreach (var scoreCard in scores)
             {
                 var card = Instantiate(scoreCardPrefab, transform);
                 card.SetValue(scoreCard.playerName, scoreCard.score);
+                card.HighLight(currentRank == currentScoreRank);
+                currentRank++;
             }
 
             _canvasGroup.DOFade(1, 0.5f);

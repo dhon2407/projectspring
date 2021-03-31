@@ -38,14 +38,14 @@ namespace Data.Database
             StartCoroutine(LoadScoreboardData(Results));
         }
 
-        private void Results(List<(string name, int score)> list)
+        private void Results(List<(string name, int score)> list, int rank)
         {
             foreach (var result in list)
                 this.Log($"{result.name} : {result.score}");
         }
 #endif
 
-        public void FetchLeaderBoards(Action<List<(string, int)>> scoreCallback)
+        public void FetchLeaderBoards(Action<List<(string, int)>, int> scoreCallback)
         {
             StartCoroutine(LoadScoreboardData(scoreCallback));
         }
@@ -70,7 +70,10 @@ namespace Data.Database
         public void SaveScore(string nameLabel, int score, Action<OperationResult> resultAction)
         {
             if (_currentUser == null)
+            {
                 resultAction(OperationResult.Fail);
+                return;
+            }
 
             StartCoroutine(UpdateScoreName(nameLabel));
             StartCoroutine(UpdateHighScore(score));
@@ -162,26 +165,31 @@ namespace Data.Database
         
         private IEnumerator UpdateHighScore(int highScore)
         {
-            var dbTask = _dbRef.Child("users").Child(_currentUser.UserId).Child("highScore").SetValueAsync(highScore);
-
-            yield return new WaitUntil(() => dbTask.IsCompleted);
-
-            if (dbTask.Exception != null)
-                Debug.LogWarning(message: $"Failed to register task with {dbTask.Exception}");
-            else
-                Debug.Log(message: $"High score {highScore} update for {_currentUser.DisplayName}");
+            yield return UpdateData("highScore", highScore, exception =>
+            {
+                if (exception != null)
+                    Debug.LogWarning($"Failed to register task with {exception}");
+                else
+                    Debug.Log($"High score {highScore} update for {_currentUser.DisplayName}");
+            });
         }
         
         private IEnumerator UpdateScoreName(string playerName)
         {
-            var dbTask = _dbRef.Child("users").Child(_currentUser.UserId).Child("playerName").SetValueAsync(playerName);
+            yield return UpdateData("playerName", playerName, exception =>
+            {
+                if (exception != null)
+                    Debug.LogWarning($"Failed to register task with {exception}");
+                else
+                    Debug.Log($"High score update for {playerName}");
+            });
+        }
 
+        private IEnumerator UpdateData<T>(string childTag, T value, Action<AggregateException> operationComplete)
+        {
+            var dbTask = _dbRef.Child("users").Child(_currentUser.UserId).Child(childTag).SetValueAsync(value);
             yield return new WaitUntil(() => dbTask.IsCompleted);
-
-            if (dbTask.Exception != null)
-                Debug.LogWarning(message: $"Failed to register task with {dbTask.Exception}");
-            else
-                Debug.Log(message: $"High score update for {playerName}");
+            operationComplete(dbTask.Exception);
         }
 
         private IEnumerator GetUserHighScore(Action<int> resultScore)
@@ -202,10 +210,11 @@ namespace Data.Database
             }
         }
         
-        private IEnumerator LoadScoreboardData(Action<List<(string, int)>> dataResult)
+        private IEnumerator LoadScoreboardData(Action<List<(string, int)>, int> dataResult)
         {
             var results = new List<(string name, int score)>();
             var dbTask = _dbRef.Child("users").OrderByChild("highScore").GetValueAsync();
+            var playerRank = 0;
 
             yield return new WaitUntil(() => dbTask.IsCompleted);
 
@@ -214,16 +223,20 @@ namespace Data.Database
             else
             {
                 var snapshot = dbTask.Result;
-
+                var rank = 1;
                 foreach (var childSnapshot in snapshot.Children.Reverse())
                 {
+                    if (_currentUser.UserId == childSnapshot.Key)
+                        playerRank = rank;
+                    
                     var username = childSnapshot.Child("playerName").Value.ToString();
                     int.TryParse(childSnapshot.Child("highScore").Value.ToString(), out var score);
                     results.Add((username,score));
+                    rank++;
                 }
             }
 
-            dataResult(results);
+            dataResult(results, playerRank);
         }
     }
 }

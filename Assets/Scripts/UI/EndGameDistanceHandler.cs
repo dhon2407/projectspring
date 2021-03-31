@@ -19,7 +19,7 @@ namespace UI
 
         public void Show(int distanceTraveled, UnityAction onFinish = null)
         {
-            transform.DOScale(1, 0.3f).OnComplete(() => AnimateValue(distanceTraveled, onFinish));
+            transform.DOScale(1, 0.5f).OnComplete(() => AnimateValue(distanceTraveled, onFinish));
         }
 
         private void AnimateValue(int distanceTraveled, UnityAction onFinish)

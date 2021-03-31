@@ -46,7 +46,7 @@ namespace Managers
             Instance.GetHighScore(highScoreCallback);
         }
 
-        public static void GetScores(Action<List<(string, int)>> scoreCallback)
+        public static void GetScores(Action<List<(string, int)>, int> scoreCallback)
         {
             Instance.GetLeaderBoard(scoreCallback);
         }
@@ -72,7 +72,7 @@ namespace Managers
             _database.FetchHighScore(highScoreCallback);
         }
         
-        private void GetLeaderBoard(Action<List<(string, int)>> scoreCallback)
+        private void GetLeaderBoard(Action<List<(string, int)>, int> scoreCallback)
         {
             _database.FetchLeaderBoards(scoreCallback);
         }
