@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using Lean.Touch;
 using Managers;
@@ -17,6 +18,8 @@ namespace UI
         private GameObject playAgainMessage;
         [Required, SerializeField]
         private CanvasGroup blackCurtain;
+        [Required, SerializeField]
+        private LeaderBoard leaderBoard;
         
         private CanvasGroup _canvasGroup;
         private EndGameDistanceHandler _distance;
@@ -98,9 +101,24 @@ namespace UI
             var currentRecord = GameManager.DistancePersonalRecord;
             _personalRecord.Show((int)distance, (int)currentRecord);
             GameManager.UpdateRecord();
+            
+            LeaderBoardManager.GetScores(HighScoresLoaded);
 
             Action playAgain = CanPlayAgain;
             playAgain.DelayInvoke(3f);
+        }
+
+        private void HighScoresLoaded(List<(string, int)> scores)
+        {
+            Action action = () =>
+            {
+                _distance.Hide();
+                _personalRecord.Hide();
+                mainMessage.SetActive(false);
+                leaderBoard.Show(scores);
+            };
+            
+            action.DelayInvoke(2f);
         }
 
         private void CanPlayAgain()

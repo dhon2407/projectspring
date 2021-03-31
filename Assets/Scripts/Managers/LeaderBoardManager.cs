@@ -46,9 +46,14 @@ namespace Managers
             Instance.GetHighScore(highScoreCallback);
         }
 
-        public static List<(string, int)> GetScores()
+        public static void GetScores(Action<List<(string, int)>> scoreCallback)
         {
-            throw new System.NotImplementedException();
+            Instance.GetLeaderBoard(scoreCallback);
+        }
+        
+        public static int GetRank(int score)
+        {
+            return -1;
         }
         
         private void UpdateScore(string nameLabel, int score)
@@ -65,6 +70,11 @@ namespace Managers
         private void GetHighScore(Action<int> highScoreCallback)
         {
             _database.FetchHighScore(highScoreCallback);
+        }
+        
+        private void GetLeaderBoard(Action<List<(string, int)>> scoreCallback)
+        {
+            _database.FetchLeaderBoards(scoreCallback);
         }
     }
 }

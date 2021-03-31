@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using CustomHelper;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Data.Database
@@ -15,6 +18,37 @@ namespace Data.Database
         private FirebaseAuth _auth;
         private FirebaseUser _currentUser;
         private DatabaseReference _dbRef;
+
+        [Button(ButtonSizes.Large)]
+        private void TrySave(string userName, int score)
+        {
+            void LoginAction(OperationResult result)
+            {
+                if (result == OperationResult.Success)
+                    SaveScore(userName, score, null);
+            }
+
+            Login(userName, LoginAction);
+        }
+        
+#if UNITY_EDITOR
+        [Button(ButtonSizes.Large)]
+        private void TryFetch()
+        {
+            StartCoroutine(LoadScoreboardData(Results));
+        }
+
+        private void Results(List<(string name, int score)> list)
+        {
+            foreach (var result in list)
+                this.Log($"{result.name} : {result.score}");
+        }
+#endif
+
+        public void FetchLeaderBoards(Action<List<(string, int)>> scoreCallback)
+        {
+            StartCoroutine(LoadScoreboardData(scoreCallback));
+        }
 
         public void Setup()
         {
@@ -38,6 +72,7 @@ namespace Data.Database
             if (_currentUser == null)
                 resultAction(OperationResult.Fail);
 
+            StartCoroutine(UpdateScoreName(nameLabel));
             StartCoroutine(UpdateHighScore(score));
         }
 
@@ -136,6 +171,18 @@ namespace Data.Database
             else
                 Debug.Log(message: $"High score {highScore} update for {_currentUser.DisplayName}");
         }
+        
+        private IEnumerator UpdateScoreName(string playerName)
+        {
+            var dbTask = _dbRef.Child("users").Child(_currentUser.UserId).Child("playerName").SetValueAsync(playerName);
+
+            yield return new WaitUntil(() => dbTask.IsCompleted);
+
+            if (dbTask.Exception != null)
+                Debug.LogWarning(message: $"Failed to register task with {dbTask.Exception}");
+            else
+                Debug.Log(message: $"High score update for {playerName}");
+        }
 
         private IEnumerator GetUserHighScore(Action<int> resultScore)
         {
@@ -153,6 +200,30 @@ namespace Data.Database
                 int.TryParse(snapshot.Child("highScore").Value.ToString(), out var defaultScore);
                 resultScore(defaultScore);
             }
+        }
+        
+        private IEnumerator LoadScoreboardData(Action<List<(string, int)>> dataResult)
+        {
+            var results = new List<(string name, int score)>();
+            var dbTask = _dbRef.Child("users").OrderByChild("highScore").GetValueAsync();
+
+            yield return new WaitUntil(() => dbTask.IsCompleted);
+
+            if (dbTask.Exception != null)
+                Debug.LogWarning(message: $"Failed to register task with {dbTask.Exception}");
+            else
+            {
+                var snapshot = dbTask.Result;
+
+                foreach (var childSnapshot in snapshot.Children.Reverse())
+                {
+                    var username = childSnapshot.Child("playerName").Value.ToString();
+                    int.TryParse(childSnapshot.Child("highScore").Value.ToString(), out var score);
+                    results.Add((username,score));
+                }
+            }
+
+            dataResult(results);
         }
     }
 }
