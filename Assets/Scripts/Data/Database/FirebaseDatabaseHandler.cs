@@ -100,7 +100,7 @@ namespace Data.Database
 
             if (loginTask.Exception != null)
             {
-                this.Log(message: $"Failed to register task with {loginTask.Exception}");
+                this.Log($"Failed to register task with {loginTask.Exception}");
                 var firebaseEx = loginTask.Exception.GetBaseException() as FirebaseException;
                 var errorCode = (AuthError) firebaseEx.ErrorCode;
 
@@ -130,7 +130,7 @@ namespace Data.Database
 
             if (registerTask.Exception != null)
             {
-                Debug.LogWarning(message: $"Failed to register task with {registerTask.Exception}");
+                Debug.LogWarning($"Failed to register task with {registerTask.Exception}");
                 FirebaseException firebaseEx = registerTask.Exception.GetBaseException() as FirebaseException;
                 AuthError errorCode = (AuthError) firebaseEx.ErrorCode;
 
@@ -149,7 +149,7 @@ namespace Data.Database
                     yield return new WaitUntil(() => profileTask.IsCompleted);
 
                     if (profileTask.Exception != null)
-                        Debug.LogWarning(message: $"Failed to register task with {profileTask.Exception}");
+                        Debug.LogWarning($"Failed to register task with {profileTask.Exception}");
                     else
                         this.Log($"Register {email} successful.");
 

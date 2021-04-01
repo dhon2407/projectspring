@@ -26,7 +26,8 @@ namespace Managers
         
         public static float DistancePersonalRecord { get; set; }
         public static Vector3 PlayerSpawnPosition { get; private set; }
-        
+        public static string Username { get; private set; } = null;
+
         public static float DistanceTraveled
         {
             get => _distanceTraveled;
@@ -38,6 +39,7 @@ namespace Managers
                 _distanceTraveled = value;
             }
         }
+        
         private static Vector3 _startingPosition;
         private static PlayerController _currentPlayer;
         private static float _distanceTraveled;
@@ -47,6 +49,11 @@ namespace Managers
         public static void GameEnd()
         {
             OnGameEnded?.Invoke();
+        }
+
+        public static void SetUsername(string uName)
+        {
+            Username = uName;
         }
 
         public static float UpdateRecord()
@@ -61,9 +68,9 @@ namespace Managers
 
         public static void PlayAgain()
         {
-            var delayStart = 1f;
+            var delayStart = 2f;
 
-            Instance.Log($"Replaying game in {delayStart} second{(delayStart > 1 ? "s" : "")}.");
+            Instance.Log($"Replaying game in {delayStart} second{(delayStart > 2 ? "s" : "")}.");
             _currentPlayer.transform.position = PlayerSpawnPosition;
             
             OnReplayGame?.Invoke();
@@ -76,6 +83,7 @@ namespace Managers
         public static void SetPlayer(PlayerController player)
         {
             _currentPlayer = player;
+            _currentPlayer.playerName = Username;
             _startingPosition = _currentPlayer.transform.position;
             PlayerSpawnPosition = _startingPosition;
         }
@@ -101,7 +109,7 @@ namespace Managers
 
         private void HandleFingerTap(LeanFinger finger)
         {
-            if (!_gameStarted)
+            if (!_gameStarted && Username != null)
             {
                 this.Log("Starting game..");
                 LeanTouch.OnFingerTap -= HandleFingerTap;

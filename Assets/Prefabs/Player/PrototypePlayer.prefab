@@ -742,6 +742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d4badabce1241d3899461c05f825fa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerName: 
   blockDuration: 0.5
   maxAttackUnlock: 3
 --- !u!114 &6787512281321190012

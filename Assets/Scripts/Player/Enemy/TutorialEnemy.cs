@@ -46,7 +46,10 @@ namespace Player.Enemy
         {
             var target = other.gameObject.GetComponent<BaseObstacle>();
             if (target || target is GroundSpike)
+            {
+                _rigidbody.velocity = Vector2.zero;
                 _animator.SetTrigger(Die);
+            }
         }
     }
 }
