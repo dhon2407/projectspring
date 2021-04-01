@@ -12,7 +12,7 @@ namespace UI
         [SerializeField]
         private TextMeshProUGUI score = null;
         [SerializeField]
-        private DOTweenAnimation dotAnimator;
+        private DOTweenAnimation dotAnimator = null;
 
         public void SetValue(string pName, int pScore)
         {

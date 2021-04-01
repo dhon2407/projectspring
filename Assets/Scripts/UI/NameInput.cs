@@ -53,7 +53,7 @@ namespace UI
         private void Start()
         {
             Action selectInput = inputField.Select;
-            selectInput.DelayInvoke(2);
+            selectInput.DelayInvoke(1);
         }
 
         private void CheckName(string playerName)

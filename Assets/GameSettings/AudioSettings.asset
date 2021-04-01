@@ -23,10 +23,10 @@ MonoBehaviour:
     volume: 0.559
   swordSwoosh:
     sound: SwordSwoosh
-    volume: 0.248
+    volume: 0.164
   shieldHit:
     sound: shieldhit
     volume: 0.219
   destructibleDestroyed:
     sound: crack
-    volume: 0.549
+    volume: 0.2

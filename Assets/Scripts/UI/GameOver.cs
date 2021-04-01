@@ -112,7 +112,7 @@ namespace UI
             LeaderBoardManager.GetScores(HighScoresLoaded);
 
             Action playAgain = CanPlayAgain;
-            playAgain.DelayInvoke(3f);
+            playAgain.DelayInvoke(5f);
         }
 
         private void HighScoresLoaded(List<(string, int)> scores, int rank)
@@ -125,7 +125,7 @@ namespace UI
                 leaderBoard.Show(scores, rank);
             };
             
-            action.DelayInvoke(2f);
+            action.DelayInvoke(4f);
         }
 
         private void CanPlayAgain()
