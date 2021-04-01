@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using Audio;
 using Level.Obstacles;
+using Managers;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -40,8 +42,20 @@ namespace Player.Enemy
         {
             _animator = GetComponent<Animator>();
             _rigidbody = GetComponent<Rigidbody2D>();
+
+            GameManager.OnReplayGameReadyIn += ReplayGame;
         }
-        
+
+        private void OnDestroy()
+        {
+            GameManager.OnReplayGameReadyIn -= ReplayGame;
+        }
+
+        private void ReplayGame(float value)
+        {
+            Destroy(gameObject);
+        }
+
         private void OnCollisionEnter2D(Collision2D other)
         {
             var target = other.gameObject.GetComponent<BaseObstacle>();
