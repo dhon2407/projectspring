@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Audio;
-using Level.Obstacles;
 using Managers;
 using Player.Input.Action;
 using Player.States;
@@ -13,7 +12,7 @@ using GameSettings = Settings.Core.Settings;
 namespace Player
 {
     [HideMonoScript]
-    public class PlayerController : BaseCharacterController
+    public class PlayerController : BasePlayerController
     {
         //TODO Move to other class / refactoring
         public string playerName = "SwordsMan";
@@ -67,10 +66,9 @@ namespace Player
                 HandleBlock();
         }
 
-        public override void HandleObstacleCollision(BaseObstacle obstacle)
+        public override void HandleCollision(HitBox hitBox)
         {
-            if (obstacle is GroundSpike)
-                Die();
+            Die();
         }
 
         private void Die()

@@ -2,10 +2,12 @@ using System;
 using Managers;
 using Player;
 using Player.Enemy;
+using Settings;
 using Sirenix.OdinInspector;
 using UI;
 using UnityEngine;
 using Utilities.Helpers;
+using GameSettings = Settings.Core.Settings;
 
 namespace Level
 {
@@ -25,6 +27,8 @@ namespace Level
         private SegmentTrigger blockPoint2 = null;
         [Required, SerializeField]
         private TutorialEnemy banditToBlock = null;
+
+        private static TutorialSettings Settings => GameSettings.Tutorial;
 
         private void Start()
         {
@@ -62,8 +66,8 @@ namespace Level
             banditToBlock.Attack();
             blockPoint2.OnTrigger -= ExecuteBlockTutorial;
             player.OnStartBlock += OnStartBlock;
-            message.Show("SWIPE LEFT TO BLOCK!");
-            Time.timeScale = 0.01f;
+            message.Show(Settings.blockingMessage);
+            Time.timeScale = Settings.blockingReducedTimeScale;
             player.UnlockBlock();
         }
 
@@ -76,7 +80,7 @@ namespace Level
             Time.timeScale = 1;
 
             Action successBlock = OnBlock;
-            successBlock.DelayInvoke(0.3f);
+            successBlock.DelayInvoke(Settings.onBlockSuccessDelay);
         }
 
         private void OnBlock()
@@ -89,9 +93,9 @@ namespace Level
         {
             attackPoint.OnTrigger -= ExecuteAttackTutorial;
             player.OnStartAttack += OnStartAttack;
-            
-            message.Show("TAP TO ATTACK!");
-            Time.timeScale = 0.05f;
+
+            message.Show(Settings.attackingMessage);
+            Time.timeScale = Settings.attackingReducedTimeScale;
             player.LockAllActions();
             player.UnlockAttack();
         }
@@ -109,8 +113,8 @@ namespace Level
             jumpPoint.OnTrigger -= ExecuteJumpTutorial;
             player.OnStartJump += OnStartJump;
             
-            message.Show("SWIPE UP TO JUMP!");
-            Time.timeScale = 0.3f;
+            message.Show(Settings.jumpingMessage);
+            Time.timeScale = Settings.jumpingReducedTimeScale;
             player.UnlockJump();
         }
 
@@ -124,7 +128,7 @@ namespace Level
         private void RunTutorial()
         {
             Action lockActions = player.LockAllActions;
-            lockActions.DelayInvoke(0.1f);
+            lockActions.DelayInvoke(Settings.startLockActionDelay);
         }
     }
 }

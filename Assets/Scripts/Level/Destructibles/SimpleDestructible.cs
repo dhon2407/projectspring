@@ -1,23 +1,25 @@
-using System;
 using Audio;
 using DG.Tweening;
+using Player;
 using UnityEngine;
 
 namespace Level.Destructibles
 {
-    public class SimpleDestructible : MonoBehaviour
+    public class SimpleDestructible : MonoBehaviour, IEntity
     {
         [SerializeField]
         private SimpleFX destroyFX = null;
         [SerializeField]
         private SpriteRenderer appearance = null;
-        [SerializeField]
-        private LayerMask destroyExceptLayer;
 
         private bool _dying;
+        private HurtBox _hurtBox;
 
         private void Awake()
         {
+            _hurtBox = GetComponentInChildren<HurtBox>();
+            _hurtBox.OnHit += Die;
+            
             if (destroyFX)
             {
                 destroyFX.gameObject.SetActive(false);
@@ -25,23 +27,11 @@ namespace Level.Destructibles
             }
         }
 
-        public void OnTriggerEnter2D(Collider2D other)
+        private void Die(HitBox hitBox)
         {
-            if (_dying || destroyExceptLayer == (destroyExceptLayer | (1 << other.gameObject.layer)))
+            if (_dying)
                 return;
-
-            _dying = true;
-            Sounds.Event.OnDestructibleDestroy.Invoke();
-            appearance.DOFade(0, 0.2f);
-            if (destroyFX)
-                destroyFX.gameObject.SetActive(true);
-        }
-
-        public void OnCollisionEnter2D(Collision2D other)
-        {
-            if (_dying || destroyExceptLayer == (destroyExceptLayer | (1 << other.gameObject.layer)))
-                return;
-
+            
             _dying = true;
             Sounds.Event.OnDestructibleDestroy.Invoke();
             appearance.DOFade(0, 0.2f);
@@ -53,5 +43,7 @@ namespace Level.Destructibles
         {
             Destroy(gameObject);
         }
+
+        public GameObject Owner => gameObject;
     }
 }

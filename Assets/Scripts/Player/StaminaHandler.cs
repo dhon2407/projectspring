@@ -10,8 +10,11 @@ namespace Player
 {
     public class StaminaHandler : MonoBehaviour
     {
-        private float maxStamina = 100;
-
+        private float _maxStamina;
+        private float _currentStamina = 100;
+        private StaminaIndicator _indicator;
+        private bool _recoverySuspend;
+        
         private float CurrentStamina
         {
             get => _currentStamina;
@@ -22,24 +25,20 @@ namespace Player
                 
                 _currentStamina = value;
                 if (_indicator != null)
-                    _indicator.Value = _currentStamina / maxStamina;
+                    _indicator.Value = _currentStamina / _maxStamina;
             }
         }
 
-        private float _currentStamina = 100;
-        private StaminaIndicator _indicator;
-        private bool _recoverySuspend;
-
         public void Recover(float value)
         {
-            CurrentStamina = Mathf.Clamp(CurrentStamina + value, 0, maxStamina);
+            CurrentStamina = Mathf.Clamp(CurrentStamina + value, 0, _maxStamina);
         }
 
         public bool Consume(int needed)
         {
             if (HasStamina(needed))
             {
-                CurrentStamina = Mathf.Clamp(CurrentStamina - needed, 0, maxStamina);
+                CurrentStamina = Mathf.Clamp(CurrentStamina - needed, 0, _maxStamina);
                 return true;
             }
 
@@ -56,15 +55,15 @@ namespace Player
             Timing.KillCoroutines(nameof(SuspendRecovery));
             _recoverySuspend = true;
             Action activateRecovery = () => _recoverySuspend = false;
-            activateRecovery.DelayInvoke(0.5f);
+            activateRecovery.DelayInvoke(Settings.Core.Settings.Player.staminaRecoverDelay);
         }
 
         private IEnumerator Recovery()
         {
             while (true)
             {
-                if (!_recoverySuspend) 
-                    Recover(maxStamina * 0.04f);
+                if (!_recoverySuspend)
+                    Recover(_maxStamina * Settings.Core.Settings.Player.staminaRecoveryRate / 100);
                     
                 yield return new WaitForSeconds(0.1f);
             }
@@ -75,6 +74,8 @@ namespace Player
             _indicator = GetComponent<StaminaIndicator>();
             GameManager.OnGameStarted += StartRecovery;
             GameManager.OnReplayGame += ReplayGame;
+
+            _maxStamina = Settings.Core.Settings.Player.maxStamina;
         }
 
         private void ReplayGame()

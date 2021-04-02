@@ -22,13 +22,11 @@ namespace Data.Database
         [Button(ButtonSizes.Large)]
         private void TrySave(string userName, int score)
         {
-            void LoginAction(OperationResult result)
+            Login(userName, result =>
             {
                 if (result == OperationResult.Success)
                     SaveScore(userName, score, null);
-            }
-
-            Login(userName, LoginAction);
+            });
         }
         
 #if UNITY_EDITOR

@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using CustomHelper;
 using Data.Database;
-using Firebase;
-using Firebase.Auth;
 using Managers.Core;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Managers

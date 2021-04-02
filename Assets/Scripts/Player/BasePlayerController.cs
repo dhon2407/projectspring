@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Player
 {
-    public abstract class BaseCharacterController : MonoBehaviour, IPlayerController
+    public abstract class BasePlayerController : MonoBehaviour, IPlayerController, IEntity
     {
         #region Inspector Values
 
@@ -40,7 +40,7 @@ namespace Player
         protected SpriteRenderer Renderer;
         protected IInputHandler InputHandler;
         protected StaminaHandler Stamina;
-        protected HitBox Hitbox;
+        protected HurtBox HurtBox;
 
         protected bool Grounded;
         protected bool Moving;
@@ -72,7 +72,7 @@ namespace Player
         
         public abstract void Jump();
         public abstract void DoAction(IAction action);
-        public abstract void HandleObstacleCollision(BaseObstacle obstacle);
+        public abstract void HandleCollision(HitBox hitBox);
         
         public bool HasStamina(int requiredStamina)
         {
@@ -119,9 +119,9 @@ namespace Player
             InputHandler = GetComponent<IInputHandler>();
             Stamina = GetComponentInChildren<StaminaHandler>();
             
-            Hitbox = GetComponent<HitBox>();
-            if (Hitbox)
-                Hitbox.OnHitObstacle += HandleObstacleCollision;
+            HurtBox = GetComponentInChildren<HurtBox>();
+            if (HurtBox)
+                HurtBox.OnHit += HandleCollision;
         }
 
         private void OnDestroy()
@@ -129,8 +129,8 @@ namespace Player
             GameManager.OnGameStarted -= GameStart;
             GameManager.OnReplayGame -= ResetGame;
             
-            if (Hitbox)
-                Hitbox.OnHitObstacle -= HandleObstacleCollision;
+            if (HurtBox)
+                HurtBox.OnHit -= HandleCollision;
         }
 
         protected virtual void ResetGame()
@@ -209,5 +209,7 @@ namespace Player
             
             Animator.SetBool(AnimParamGrounded, Grounded);
         }
+
+        public GameObject Owner => gameObject;
     }
 }

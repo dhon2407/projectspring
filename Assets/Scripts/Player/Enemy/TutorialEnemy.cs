@@ -58,12 +58,12 @@ namespace Player.Enemy
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            var target = other.gameObject.GetComponent<BaseObstacle>();
-            if (target || target is GroundSpike)
-            {
-                _rigidbody.velocity = Vector2.zero;
-                _animator.SetTrigger(Die);
-            }
+            var target = other.gameObject.GetComponent<HitBox>();
+            if (!target)
+                return;
+            
+            _rigidbody.velocity = Vector2.zero;
+            _animator.SetTrigger(Die);
         }
     }
 }

@@ -14,5 +14,12 @@ namespace Settings
         public float baseJumpForce = 7.5f;
         [BoxGroup("Movement")]
         public bool disableMultipleJumps;
+
+        [BoxGroup("Attributes")]
+        public float staminaRecoverDelay = 0.5f;
+        [BoxGroup("Attributes")]
+        public float staminaRecoveryRate = 40f;
+        [BoxGroup("Attributes")]
+        public float maxStamina = 100;
     }
 }

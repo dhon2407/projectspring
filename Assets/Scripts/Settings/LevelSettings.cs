@@ -9,7 +9,9 @@ namespace Settings
     public class LevelSettings : ScriptableObject
     {
         public List<LevelSegmentHandler> segmentList;
-        
+
+        public float retryDelay = 2f;
+
         public LevelSegmentHandler GetNextSegment()
         {
             return segmentList.GetRandom();

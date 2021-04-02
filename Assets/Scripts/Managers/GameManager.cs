@@ -68,9 +68,9 @@ namespace Managers
 
         public static void PlayAgain()
         {
-            var delayStart = 2f;
+            var delayStart = Settings.Core.Settings.Level.retryDelay;
 
-            Instance.Log($"Replaying game in {delayStart} second{(delayStart > 2 ? "s" : "")}.");
+            Instance.Log($"Replaying game in {delayStart.ToPluralString("second")}.");
             _currentPlayer.transform.position = PlayerSpawnPosition;
             
             OnReplayGame?.Invoke();

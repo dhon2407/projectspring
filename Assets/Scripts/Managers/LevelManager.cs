@@ -29,10 +29,7 @@ namespace Managers
             };
         }
 
-        protected override void Init()
-        {
-            
-        }
+        protected override void Init() { }
         
         private static LevelManager Instance =>
             _instance ? _instance : throw new UnityException($"No instance of {nameof(LevelManager)}");

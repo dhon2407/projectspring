@@ -1,23 +1,16 @@
-﻿using CustomHelper;
-using Level.Obstacles;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Player
 {
-    public sealed class HitBox : MonoBehaviour
+    public class HitBox : MonoBehaviour
     {
-        public delegate void HitEvent(BaseObstacle obstacle);
-        public event HitEvent OnHitObstacle;
-        private void OnCollisionEnter2D(Collision2D other)
-        {
-            var target = other.gameObject.GetComponent<BaseObstacle>();
-            if (target)
-                OnHitObstacleInvoke(target);
-        }
+        public IEntity Owner { get => _owner; }
 
-        private void OnHitObstacleInvoke(BaseObstacle obstacle)
+        private IEntity _owner;
+        
+        private void Awake()
         {
-            OnHitObstacle?.Invoke(obstacle);
+            _owner = GetComponentInParent<IEntity>();
         }
     }
 }

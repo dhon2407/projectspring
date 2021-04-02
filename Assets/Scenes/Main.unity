@@ -2258,6 +2258,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be8058fa0e3c4db6ae27fa2ee3c2c346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &407417385
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 85
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9.100579
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 834712873635093599, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_Name
+      value: Bandit1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
 --- !u!1 &409074447
 GameObject:
   m_ObjectHideFlags: 0
@@ -2810,6 +2867,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f33c18558053fa949b185ab95afd66ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &508814811
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 81
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9.100579
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 834712873635093599, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_Name
+      value: Bandit1 (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -4194,6 +4308,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da817a757aea1b94690bd47ace998b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &825448056
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 83
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9.100579
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 829344350719377629, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 834712873635093599, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
+      propertyPath: m_Name
+      value: Bandit1 (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ad9ca313a429dea4ea31e31e2572886d, type: 3}
 --- !u!1 &833953475
 GameObject:
   m_ObjectHideFlags: 0
