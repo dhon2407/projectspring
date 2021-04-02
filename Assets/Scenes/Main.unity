@@ -4813,6 +4813,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1201830145, guid: 5169597be03580c48a8f18fcb66c486e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1201830145, guid: 5169597be03580c48a8f18fcb66c486e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1201830146, guid: 5169597be03580c48a8f18fcb66c486e, type: 3}
+      propertyPath: m_Size.x
+      value: 1.7216117
+      objectReference: {fileID: 0}
+    - target: {fileID: 1201830146, guid: 5169597be03580c48a8f18fcb66c486e, type: 3}
+      propertyPath: m_Size.y
+      value: 1.6579404
+      objectReference: {fileID: 0}
+    - target: {fileID: 1201830146, guid: 5169597be03580c48a8f18fcb66c486e, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.15917909
+      objectReference: {fileID: 0}
+    - target: {fileID: 1201830146, guid: 5169597be03580c48a8f18fcb66c486e, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.21223882
+      objectReference: {fileID: 0}
     - target: {fileID: 5126507520524490402, guid: 5169597be03580c48a8f18fcb66c486e, type: 3}
       propertyPath: m_Name
       value: PrototypePlayer
@@ -8558,6 +8582,10 @@ PrefabInstance:
     - target: {fileID: 4432983740712300393, guid: b0e351eb6b16e3440b741672dfcf3194, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6697633751548347710, guid: b0e351eb6b16e3440b741672dfcf3194, type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 9112195259972805046, guid: b0e351eb6b16e3440b741672dfcf3194, type: 3}
       propertyPath: player
