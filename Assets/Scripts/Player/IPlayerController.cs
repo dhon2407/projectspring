@@ -10,6 +10,7 @@ namespace Player
     {
         event BasicEvent OnGroundLand;
         bool OnGround { get; set; }
+        bool IsDead { get; }
         IPlayerState CurrentState { get; set; }
         IAction CurrentAction { get; set; }
         int MoveDirection { get; }

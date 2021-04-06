@@ -69,12 +69,18 @@ namespace Player
 
         public override void HandleCollision(HitBox hitBox)
         {
-            
-            Die();
+            if (IsDead)
+                return;
+
+            if (CurrentState is BlockState)
+                OnSuccessBlock();
+            else
+                Die();
         }
 
         private void Die()
         {
+            IsDead = true;
             Animator.SetBool(NoBlood,true);
             Animator.SetTrigger(Death);
             InputHandler.Suspend(true);

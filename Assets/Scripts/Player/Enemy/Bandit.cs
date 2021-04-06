@@ -43,7 +43,7 @@ namespace Player.Enemy
 
         private void OnPlayerOnRange(PlayerController player)
         {
-            if (_isAttacking)
+            if (_isAttacking || player.IsDead)
                 return;
             
             _isAttacking = true;
@@ -52,6 +52,9 @@ namespace Player.Enemy
 
         private void OnSeePlayer(PlayerController player)
         {
+            if (player.IsDead)
+                return;
+            
             Animator.SetInteger(AnimState, AnimStateCombat);
         }
 

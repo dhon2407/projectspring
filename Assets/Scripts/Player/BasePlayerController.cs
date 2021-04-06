@@ -53,7 +53,7 @@ namespace Player
             get => Grounded && GroundSensor.OnGround;
             set => Grounded = value;
         }
-
+        
         protected static readonly IPlayerState DefaultState = new FreeState();
 
         public IPlayerState CurrentState
@@ -67,6 +67,7 @@ namespace Player
         }
 
         public IAction CurrentAction { get; set; } = null;
+        public bool IsDead { get; protected set; }
 
         public int MoveDirection => _gameStarted ? InputHandler?.MovementDirection ?? 0 : 0;
         
@@ -135,6 +136,7 @@ namespace Player
 
         protected virtual void ResetGame()
         {
+            IsDead = false;
             _gameStarted = false;
             Animator.Rebind();
             Animator.Update(0f);
