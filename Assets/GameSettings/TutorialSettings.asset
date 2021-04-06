@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TutorialSettings
   m_EditorClassIdentifier: 
   startLockActionDelay: 0.05
-  onBlockSuccessDelay: 0.3
+  onBlockSuccessDelay: 0.4
   blockingReducedTimeScale: 0.01
   attackingReducedTimeScale: 0.05
   jumpingReducedTimeScale: 0.05
