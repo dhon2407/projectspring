@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using Audio;
-using Level.Obstacles;
 using Managers;
 using Sirenix.OdinInspector;
 using UnityEngine;

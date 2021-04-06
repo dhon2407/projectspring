@@ -4837,6 +4837,10 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 0.21223882
       objectReference: {fileID: 0}
+    - target: {fileID: 3280551501119560619, guid: 5169597be03580c48a8f18fcb66c486e, type: 3}
+      propertyPath: blockSuccessRecovery
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 5126507520524490402, guid: 5169597be03580c48a8f18fcb66c486e, type: 3}
       propertyPath: m_Name
       value: PrototypePlayer

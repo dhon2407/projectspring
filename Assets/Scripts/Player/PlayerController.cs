@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Audio;
 using Managers;
+using MEC;
 using Player.Input.Action;
 using Player.States;
 using Sirenix.OdinInspector;
@@ -68,6 +69,7 @@ namespace Player
 
         public override void HandleCollision(HitBox hitBox)
         {
+            
             Die();
         }
 
@@ -93,19 +95,33 @@ namespace Player
         
         //TODO Adjustable somewhere
         public float blockDuration = 3f;
+        public float blockSuccessRecovery = 0.5f;
+        public Vector2 blockKnockBack = new Vector2(-100, 20);
         
         public event BasicEvent OnStartBlock;
 
         private static readonly int AnimParamBlock = Animator.StringToHash("Block");
         private static readonly int AnimParamBlockLock = Animator.StringToHash("IdleBlock");
         private static readonly int AnimParamBlockHit = Animator.StringToHash("SuccessBlock");
+        private static readonly string OnBlockDelayTag = "OnBlockDelay";
 
         public void OnSuccessBlock()
         {
+            Timing.KillCoroutines(OnBlockDelayTag);
+            
             Sounds.Event.OnShieldHit.Invoke();
             Animator.SetTrigger(AnimParamBlockHit);
+
+            BlockKnockBack();
+            Action releaseBlock = OnBlockComplete;
+            releaseBlock.DelayInvoke(blockDuration + blockSuccessRecovery, OnBlockDelayTag);
         }
-        
+
+        private void BlockKnockBack()
+        {
+            Rigidbody2D.AddForce(blockKnockBack);
+        }
+
         private void HandleBlock()
         {
             if (!CurrentState.CanMoveTo<BlockState>())
@@ -122,7 +138,7 @@ namespace Player
             InputHandler.TemporaryStopMovement();
 
             Action releaseBlock = OnBlockComplete;
-            releaseBlock.DelayInvoke(blockDuration);
+            releaseBlock.DelayInvoke(blockDuration, OnBlockDelayTag);
         }
 
         private void OnBlockComplete()
