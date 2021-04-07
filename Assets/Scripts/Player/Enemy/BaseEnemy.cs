@@ -1,11 +1,12 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Player.Enemy
 {
     public abstract class BaseEnemy : MonoBehaviour, IEntity
     {
         public GameObject Owner => gameObject;
+        
+        public bool IsDead { get; protected set; }
         
         protected Animator Animator;
         protected Rigidbody2D Rigidbody;

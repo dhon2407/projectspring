@@ -19,11 +19,26 @@ namespace UI.Player
         
         private float _currentValue = 0f;
         private SpriteRenderer[] _sprites;
+        private bool _gameStarted;
 
         private void Awake()
         {
             InitializeComponents();
             UpdateDisplay();
+
+            GameManager.OnGameStarted += GameStarted;
+            GameManager.OnPlayerDie += GameEnded;
+        }
+
+        private void GameEnded()
+        {
+            FadeOut();
+            _gameStarted = false;
+        }
+
+        private void GameStarted()
+        {
+            _gameStarted = true;
         }
 
         private void InitializeComponents()
@@ -42,6 +57,9 @@ namespace UI.Player
 
         private void FadeIn()
         {
+            if (!_gameStarted)
+                return;
+            
             foreach (var sprite in _sprites)
             {
                 sprite.DOKill();

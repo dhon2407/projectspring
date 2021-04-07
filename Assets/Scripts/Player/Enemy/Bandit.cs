@@ -66,14 +66,21 @@ namespace Player.Enemy
 
         private void OnHit(HitBox hitBox)
         {
-            Animator.SetTrigger(Die);
+            if (IsDead)
+                return;
+            
             OnDie();
         }
 
         private void OnDie()
         {
+            IsDead = true;
+            Animator.SetTrigger(Die);
             _hurtBox.OnHit -= OnHit;
             playerRangeSensor.OnPlayerDetect -= OnSeePlayer;
+            playerAttackSensor.OnPlayerDetect -= OnPlayerOnRange;
+            playerRangeSensor.OnPlayerLeave -= OnPlayerLeave;
+            playerAttackSensor.OnPlayerLeave -= OnPlayerLeave;
         }
     }
 }

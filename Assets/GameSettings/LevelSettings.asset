@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: LevelSettings
   m_EditorClassIdentifier: 
   segmentList:
+  - {fileID: 4126186263011358429, guid: 6dfa496a171c4aa4aa55bbfa4aa47f73, type: 3}
   - {fileID: 4126186263011358429, guid: 2bcdd4bd98748ac408a490c461045406, type: 3}
+  retryDelay: 0.5

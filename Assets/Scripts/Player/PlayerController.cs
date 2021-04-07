@@ -15,7 +15,6 @@ namespace Player
     [HideMonoScript]
     public class PlayerController : BasePlayerController
     {
-        //TODO Move to other class / refactoring
         public string playerName = "SwordsMan";
 
         #region TUTORIAL HANDLING
@@ -32,7 +31,6 @@ namespace Player
         #endregion
         
         
-        //TODO Move to other class / refactoring
         #region JUMP HANDLING
 
         public event BasicEvent OnStartJump;
@@ -80,11 +78,13 @@ namespace Player
 
         private void Die()
         {
+            Rigidbody2D.velocity = Vector2.zero;
             IsDead = true;
             Animator.SetBool(NoBlood,true);
             Animator.SetTrigger(Death);
             InputHandler.Suspend(true);
             ResetAttackParameters();
+            GameManager.PlayerDie();
             
             Action gameEnd = GameManager.GameEnd;
             gameEnd.DelayInvoke(1f);

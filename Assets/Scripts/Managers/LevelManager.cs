@@ -1,4 +1,6 @@
-﻿using Level;
+﻿using System.Collections.Generic;
+using CustomHelper;
+using Level;
 using Managers.Core;
 using UnityEngine;
 
@@ -6,7 +8,8 @@ namespace Managers
 {
     public class LevelManager : SingletonManager<LevelManager>
     {
-        private static int _levelSegmentGenerated = 0;
+        private static int _levelSegmentGenerated;
+        private readonly List<LevelSegmentHandler> _remainingSegments = new List<LevelSegmentHandler>();
         public static void RegisterSegment(LevelSegmentHandler levelSegmentHandler)
         {
             levelSegmentHandler.OnLevelSegmentEnding += SegmentEnding;
@@ -16,7 +19,7 @@ namespace Managers
         {
             _levelSegmentGenerated++;
 
-            var nextSegmentRef = Settings.Core.Settings.Level.GetNextSegment();
+            var nextSegmentRef = Instance.GetNextSegment();
             segmentOwner.OnLevelSegmentEnding -= SegmentEnding;
             
             var nextSegment = Instantiate(nextSegmentRef, endPoint.position,
@@ -29,7 +32,21 @@ namespace Managers
             };
         }
 
-        protected override void Init() { }
+        protected override void Init()
+        {
+            _remainingSegments.AddRange(Settings.Core.Settings.Level.segmentList);
+        }
+
+        private LevelSegmentHandler GetNextSegment()
+        {
+            var nextSegment = _remainingSegments.GetRandom();
+            _remainingSegments.Remove(nextSegment);
+            
+            if (_remainingSegments.Count == 0)
+                _remainingSegments.AddRange(Settings.Core.Settings.Level.segmentList);
+
+            return nextSegment;
+        }
         
         private static LevelManager Instance =>
             _instance ? _instance : throw new UnityException($"No instance of {nameof(LevelManager)}");

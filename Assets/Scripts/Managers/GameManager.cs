@@ -18,6 +18,7 @@ namespace Managers
 
         public static event BasicEvent OnGameStarted;
         public static event BasicEvent OnGameEnded;
+        public static event BasicEvent OnPlayerDie;
         public static event BasicEvent OnReplayGame;
         public static event TimedEvent OnReplayGameReadyIn;
         public static event DistanceChangeEvent OnDistanceUpdate;
@@ -49,6 +50,11 @@ namespace Managers
         public static void GameEnd()
         {
             OnGameEnded?.Invoke();
+        }
+        
+        public static void PlayerDie()
+        {
+            OnPlayerDie?.Invoke();
         }
 
         public static void SetUsername(string uName)
@@ -86,6 +92,11 @@ namespace Managers
             _currentPlayer.playerName = Username;
             _startingPosition = _currentPlayer.transform.position;
             PlayerSpawnPosition = _startingPosition;
+        }
+
+        public static void UpdateSpawnPoint(Vector3 newSpawnPosition)
+        {
+            PlayerSpawnPosition = newSpawnPosition;
         }
         
         protected override void Init()

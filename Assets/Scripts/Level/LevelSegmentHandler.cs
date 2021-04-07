@@ -15,6 +15,8 @@ namespace Level
         private SegmentTrigger nearEndTrigger = null;
         [Required, SerializeField]
         private SegmentTrigger startingTrigger = null;
+        [Required, SerializeField]
+        private Transform playerSpawnPosition = null;
 
         public delegate void LevelSegmentEndingEvent(LevelSegmentHandler segmentOwner, Transform endPoint);
         public delegate void LevelSegmentStaringEvent(LevelSegmentHandler segmentOwner);
@@ -53,6 +55,7 @@ namespace Level
 
         private void OnLevelSegmentStartingInvoke()
         {
+            GameManager.UpdateSpawnPoint(playerSpawnPosition.position);
             OnLevelSegmentStarting?.Invoke(this);
         }
 

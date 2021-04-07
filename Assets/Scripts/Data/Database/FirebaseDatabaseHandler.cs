@@ -93,6 +93,7 @@ namespace Data.Database
         {
             _currentUser = null;
             var email = $"{userName}@{SystemInfo.deviceUniqueIdentifier}.{Application.productName}";
+            this.Log($"Using email : {email} auth : {(_auth != null ? "OK" : "NG")}.");
             var loginTask = _auth.SignInWithEmailAndPasswordAsync(email, password);
             yield return new WaitUntil(() => loginTask.IsCompleted);
 
