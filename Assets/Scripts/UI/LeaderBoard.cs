@@ -14,6 +14,7 @@ namespace UI
 
         public void Show(List<(string playerName, int score)> scores, int currentScoreRank = 0)
         {
+            var limit = Settings.Core.Settings.Dev.LeaderBoardsLimit;
             ClearItems();
             var currentRank = 1;
             foreach (var scoreCard in scores)
@@ -22,6 +23,9 @@ namespace UI
                 card.SetValue(scoreCard.playerName, scoreCard.score);
                 card.HighLight(currentRank == currentScoreRank);
                 currentRank++;
+
+                if (currentRank > limit)
+                    break;
             }
 
             _canvasGroup.DOFade(1, 0.5f);

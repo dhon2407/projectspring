@@ -177,7 +177,7 @@ namespace Player
         {
             var verticalVelocity = Rigidbody2D.velocity.y;
             Rigidbody2D.velocity =
-                new Vector2(MoveDirection * Settings.Core.Settings.Player.baseMoveSpeed, verticalVelocity);
+                new Vector2(MoveDirection * Settings.Core.Settings.Player.baseMoveSpeed * LevelManager.MoveSpeedMultiplier, verticalVelocity);
             Animator.SetFloat(AnimParamAirSpeedY, verticalVelocity);
         }
 

@@ -2,6 +2,7 @@
 using CustomHelper;
 using Level;
 using Managers.Core;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Managers
@@ -10,6 +11,12 @@ namespace Managers
     {
         private static int _levelSegmentGenerated;
         private readonly List<LevelSegmentHandler> _remainingSegments = new List<LevelSegmentHandler>();
+
+        public static float MoveSpeedMultiplier => Instance._moveSpeedMultiplier;
+
+        [ShowInInspector]
+        private float _moveSpeedMultiplier;
+        
         public static void RegisterSegment(LevelSegmentHandler levelSegmentHandler)
         {
             levelSegmentHandler.OnLevelSegmentEnding += SegmentEnding;
@@ -27,14 +34,25 @@ namespace Managers
             nextSegment.name = $"{nextSegmentRef.name} - {_levelSegmentGenerated}";
             nextSegment.OnLevelSegmentStarting += owner =>
             {
+                Instance.IncreaseMoveSpeed();
                 if (segmentOwner != null)
                     segmentOwner.DestroySelf();
             };
         }
 
+        private void IncreaseMoveSpeed()
+        {
+            _moveSpeedMultiplier =
+                Mathf.Clamp(_moveSpeedMultiplier + Settings.Core.Settings.Level.speedRateIncreasePerSegment, 1,
+                    Settings.Core.Settings.Level.maxPlayerSpeed);
+        }
+
         protected override void Init()
         {
+            _moveSpeedMultiplier = 1;
             _remainingSegments.AddRange(Settings.Core.Settings.Level.segmentList);
+
+            GameManager.OnPlayerDie += () => _moveSpeedMultiplier = 1;
         }
 
         private LevelSegmentHandler GetNextSegment()

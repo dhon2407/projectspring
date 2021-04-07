@@ -11,6 +11,8 @@ namespace Settings
         public List<LevelSegmentHandler> segmentList;
 
         public float retryDelay = 2f;
+        public float speedRateIncreasePerSegment;
+        public float maxPlayerSpeed;
 
         public LevelSegmentHandler GetNextSegment()
         {
