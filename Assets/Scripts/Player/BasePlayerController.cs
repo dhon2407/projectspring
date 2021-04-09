@@ -1,4 +1,5 @@
-﻿using Audio;
+﻿using System;
+using Audio;
 using Level.Obstacles;
 using Managers;
 using Player.Input;
@@ -153,11 +154,15 @@ namespace Player
             UpdateMovement();
         }
 
+        private void FixedUpdate()
+        {
+            UpdateMoveVelocity();
+        }
+
         private void UpdateMovement()
         {
             UpdateMovingStatus();
             UpdateFacingDirection();
-            UpdateMoveVelocity();
 
             CheckInput();
             
@@ -177,7 +182,7 @@ namespace Player
         {
             var verticalVelocity = Rigidbody2D.velocity.y;
             Rigidbody2D.velocity =
-                new Vector2(MoveDirection * Settings.Core.Settings.Player.baseMoveSpeed * LevelManager.MoveSpeedMultiplier, verticalVelocity);
+                new Vector2(MoveDirection * Settings.Core.Settings.Player.baseMoveSpeed * LevelManager.MoveSpeedMultiplier * Time.deltaTime, verticalVelocity);
             Animator.SetFloat(AnimParamAirSpeedY, verticalVelocity);
         }
 

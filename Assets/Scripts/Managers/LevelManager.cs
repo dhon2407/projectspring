@@ -16,6 +16,8 @@ namespace Managers
 
         [ShowInInspector]
         private float _moveSpeedMultiplier;
+
+        private bool initialSegments = true;
         
         public static void RegisterSegment(LevelSegmentHandler levelSegmentHandler)
         {
@@ -57,11 +59,14 @@ namespace Managers
 
         private LevelSegmentHandler GetNextSegment()
         {
-            var nextSegment = _remainingSegments.GetRandom();
+            var nextSegment = initialSegments ? _remainingSegments[0] : _remainingSegments.GetRandom();
             _remainingSegments.Remove(nextSegment);
-            
+
             if (_remainingSegments.Count == 0)
+            {
+                initialSegments = false;
                 _remainingSegments.AddRange(Settings.Core.Settings.Level.segmentList);
+            }
 
             return nextSegment;
         }
@@ -76,5 +81,13 @@ namespace Managers
             set => _instance = value;
             get => _instance;
         }
+
+#if UNITY_EDITOR
+        [Button]
+        private void TestIncreaseSpeed()
+        {
+            IncreaseMoveSpeed();
+        }
+#endif
     }
 }

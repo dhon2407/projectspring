@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f9debbac63b4bd5a77c0a30e4f4d4f6, type: 3}
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
-  baseMoveSpeed: 3
+  baseMoveSpeed: 150
   baseJumpForce: 7.5
   disableMultipleJumps: 1
   staminaRecoverDelay: 0.5

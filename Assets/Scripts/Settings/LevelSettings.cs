@@ -13,6 +13,7 @@ namespace Settings
         public float retryDelay = 2f;
         public float speedRateIncreasePerSegment;
         public float maxPlayerSpeed;
+        public float enemyMovementSpeed = 1f;
 
         public LevelSegmentHandler GetNextSegment()
         {
