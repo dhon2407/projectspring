@@ -39,6 +39,7 @@ namespace UI
 
         public void Hide()
         {
+            transform.DOKill();
             transform.DOScale(0, 0f).OnComplete(() =>
             {
                 _currentValue = 0;

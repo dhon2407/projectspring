@@ -42,6 +42,7 @@ namespace UI
 
         public void Hide()
         {
+            _canvasGroup.DOKill();
             _canvasGroup.DOFade(0, 0f)
                 .OnComplete(() =>
                 {
