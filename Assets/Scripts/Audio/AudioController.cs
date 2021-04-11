@@ -55,12 +55,20 @@ namespace Audio
             MasterAudio.ChangeVariationPitch(soundGroupAttribute, true, null, pitch);
         }
         
-        public void Mute(bool active)
+        public void MuteSFX(bool active)
         {
             if (active)
-                MasterAudio.MuteEverything();
+                MasterAudio.MuteBus("SFX");
             else
-                MasterAudio.UnmuteEverything();
+                MasterAudio.UnmuteBus("SFX");
+        }
+        
+        public void MutePlaylist(bool active)
+        {
+            if (active)
+                MasterAudio.MutePlaylist();
+            else
+                MasterAudio.UnmutePlaylist();
         }
 
         private void Awake()
@@ -95,10 +103,16 @@ namespace Audio
             return _audioController != null;
         }
 
-        public static void Mute(bool active)
+        public static void MuteSFX(bool active)
         {
             if (Initialized)
-                _audioController.Mute(active);
+                _audioController.MuteSFX(active);
+        }
+        
+        public static void MutePlaylist(bool active)
+        {
+            if (Initialized)
+                _audioController.MutePlaylist(active);
         }
 
         public static AudioEvent Event

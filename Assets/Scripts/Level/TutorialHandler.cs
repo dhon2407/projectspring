@@ -13,6 +13,8 @@ namespace Level
 {
     public class TutorialHandler : MonoBehaviour
     {
+        public static event EventHandler OnTutorialFinished;
+        
         [Required, SerializeField]
         private PlayerController player = null;
         [Required, SerializeField]
@@ -29,7 +31,7 @@ namespace Level
         private TutorialEnemy banditToBlock = null;
 
         private static TutorialSettings Settings => GameSettings.Tutorial;
-
+        
         private void Start()
         {
             GameManager.OnGameStarted += RunTutorial;
@@ -87,6 +89,9 @@ namespace Level
         {
             banditToBlock.ThrowOff();
             player.OnSuccessBlock();
+
+            Action showSettings = () => OnTutorialFinished?.Invoke(this, EventArgs.Empty);
+            showSettings.DelayInvoke(3f);
         }
 
         private void ExecuteAttackTutorial()

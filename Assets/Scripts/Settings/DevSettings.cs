@@ -9,6 +9,6 @@ namespace Settings
         [BoxGroup("Level")]
         public float levelSegmentDestroyDelay = 0.5f;
         [BoxGroup("Leader Board")]
-        public int LeaderBoardsLimit => 15;
+        public int leaderBoardsLimit = 15;
     }
 }

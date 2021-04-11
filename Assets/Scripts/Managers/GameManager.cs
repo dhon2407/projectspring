@@ -3,6 +3,7 @@ using CustomHelper;
 using Lean.Touch;
 using Managers.Core;
 using Player;
+using UI;
 using UnityEngine;
 using Utilities.Helpers;
 
@@ -120,8 +121,11 @@ namespace Managers
 
         private void HandleFingerTap(LeanFinger finger)
         {
-            if (!_gameStarted && Username != null)
+            if (!_gameStarted && Username != null && !Options.IsOpen)
             {
+                if (finger.IsOverGui)
+                    return;
+                
                 this.Log("Starting game..");
                 LeanTouch.OnFingerTap -= HandleFingerTap;
                 OnGameStartedInvoke();

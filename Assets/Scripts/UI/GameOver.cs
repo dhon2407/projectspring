@@ -35,6 +35,7 @@ namespace UI
             _personalRecord = GetComponentInChildren<EndGamePersonalRecord>();
             
             _canvasGroup.alpha = 0;
+            SetCanvasActive(false);
             
             GameManager.OnGameEnded += GameEnded;
             GameManager.OnReplayGameReadyIn += ReplayReadyIn;
@@ -47,6 +48,7 @@ namespace UI
         {
             ResetAppearance();
 
+            SetCanvasActive(false);
             _canvasGroup.DOFade(0, 0);
             blackCurtain.DOFade(0, duration - 0.3f);
         }
@@ -90,6 +92,7 @@ namespace UI
 
         private void ShowResults()
         {
+            SetCanvasActive(true);
             ShowDistanceSummary();
         }
 
@@ -132,6 +135,12 @@ namespace UI
         {
             _readyToRestart = true;
             playAgainMessage.SetActive(true);
+        }
+        
+        private void SetCanvasActive(bool active)
+        {
+            _canvasGroup.interactable = active;
+            _canvasGroup.blocksRaycasts = active;
         }
     }
 }

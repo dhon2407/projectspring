@@ -1,5 +1,5 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
+using Level;
 using Managers;
 using UnityEngine;
 
@@ -7,6 +7,8 @@ namespace UI
 {
     public class HUD : MonoBehaviour
     {
+        [SerializeField]
+        private GameObject optionsButton;
         private CanvasGroup _canvasGroup;
 
         private void Awake()
@@ -14,13 +16,30 @@ namespace UI
             _canvasGroup = GetComponent<CanvasGroup>();
 
             GameManager.OnGameStarted += FadeIn;
+            GameManager.OnGameStarted += HideSettingsButton;
             GameManager.OnGameEnded += FadeOut;
+            GameManager.OnGameEnded += HideSettingsButton;
+            GameManager.OnReplayGameReadyIn += ShowSettingsButton;
+            TutorialHandler.OnTutorialFinished += (sender, args) => ShowSettingsButton(0);
+        }
+
+        private void ShowSettingsButton(float value)
+        {
+            optionsButton.SetActive(true);
+        }
+
+        private void HideSettingsButton()
+        {
+            optionsButton.SetActive(false);
         }
 
         private void OnDestroy()
         {
             GameManager.OnGameStarted -= FadeIn;
             GameManager.OnGameEnded -= FadeOut;
+            GameManager.OnGameStarted -= HideSettingsButton;
+            GameManager.OnGameEnded -= HideSettingsButton;
+            GameManager.OnReplayGameReadyIn -= ShowSettingsButton;
         }
 
         private void FadeIn()

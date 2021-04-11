@@ -14,7 +14,7 @@ namespace UI
 
         public void Show(List<(string playerName, int score)> scores, int currentScoreRank = 0)
         {
-            var limit = Settings.Core.Settings.Dev.LeaderBoardsLimit;
+            var limit = Settings.Core.Settings.Dev.leaderBoardsLimit;
             ClearItems();
             var currentRank = 1;
             foreach (var scoreCard in scores)

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Developer Settings
   m_EditorClassIdentifier: 
   levelSegmentDestroyDelay: 0.5
+  leaderBoardsLimit: 8
