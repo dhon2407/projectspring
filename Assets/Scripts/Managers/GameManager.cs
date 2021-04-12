@@ -50,6 +50,7 @@ namespace Managers
         
         public static void GameEnd()
         {
+            AdManager.ShowBannerAds(false);
             OnGameEnded?.Invoke();
         }
         
@@ -75,6 +76,8 @@ namespace Managers
 
         public static void PlayAgain()
         {
+            AdManager.ShowInterstitial();
+            AdManager.ShowBannerAds(true);
             var delayStart = Settings.Core.Settings.Level.retryDelay;
 
             Instance.Log($"Replaying game in {delayStart.ToPluralString("second")}.");

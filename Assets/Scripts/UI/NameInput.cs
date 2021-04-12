@@ -20,7 +20,11 @@ namespace UI
 
         public void OnAcceptName()
         {
-            FadeOut(0.3f, () => GameManager.SetUsername(inputField.text));
+            FadeOut(0.3f, () =>
+            {
+                AdManager.ShowBannerAds(true);
+                GameManager.SetUsername(inputField.text);
+            });
         }
 
         private void FadeOut(float duration, Action action)
