@@ -92,7 +92,7 @@ namespace Data.Database
         private IEnumerator Login(string userName, string password, Action<OperationResult> resultAction)
         {
             _currentUser = null;
-            var email = $"{userName}@{SystemInfo.deviceUniqueIdentifier}.{Application.productName}";
+            var email = $"{userName}@{SystemInfo.deviceUniqueIdentifier}.{Application.productName.Replace(" ", string.Empty)}";
             this.Log($"Using email : {email} auth : {(_auth != null ? "OK" : "NG")}.");
             var loginTask = _auth.SignInWithEmailAndPasswordAsync(email, password);
             yield return new WaitUntil(() => loginTask.IsCompleted);
