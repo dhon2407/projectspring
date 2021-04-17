@@ -11,6 +11,6 @@
             }
         }
 
-        public int RequiredStamina => 50;
+        public int RequiredStamina => 35;
     }
 }

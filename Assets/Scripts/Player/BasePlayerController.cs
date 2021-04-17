@@ -16,7 +16,12 @@ namespace Player
 
         [ShowInInspector, ShowIf("@InputHandler != null"), LabelText("Input:")]
         private IInputHandler CurrentInputHandler => InputHandler;
-        
+
+        [SerializeField]
+        private BaseInputHandler touchInputHandler = null;
+        [SerializeField, LabelText("Override Handler")]
+        protected BaseInputHandler InputHandler;
+
         #endregion
 
         #region Events
@@ -39,7 +44,6 @@ namespace Player
         protected Rigidbody2D Rigidbody2D;
         protected GroundSensor GroundSensor;
         protected SpriteRenderer Renderer;
-        protected IInputHandler InputHandler;
         protected StaminaHandler Stamina;
         protected HurtBox HurtBox;
 
@@ -118,12 +122,15 @@ namespace Player
             Rigidbody2D = GetComponent<Rigidbody2D>();
             GroundSensor = FindObjectOfType<GroundSensor>();
             Renderer = GetComponent<SpriteRenderer>();
-            InputHandler = GetComponent<IInputHandler>();
             Stamina = GetComponentInChildren<StaminaHandler>();
             
             HurtBox = GetComponentInChildren<HurtBox>();
             if (HurtBox)
                 HurtBox.OnHit += HandleCollision;
+            
+#if !UNITY_EDITOR
+            InputHandler = touchInputHandler;
+#endif
         }
 
         private void OnDestroy()

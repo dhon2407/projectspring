@@ -61,7 +61,7 @@ namespace GoogleMobileAds.Unity
 
         private void CreateButtonBehavior()
         {
-            buttonBehaviour = new ButtonBehaviour();
+            buttonBehaviour = prefabAd.AddComponent<ButtonBehaviour>();
             buttonBehaviour.OnAdOpening += OnAdOpening;
             buttonBehaviour.OnLeavingApplication += OnAdLeavingApplication;
         }

@@ -16,6 +16,7 @@ MonoBehaviour:
   - {fileID: 4126186263011358429, guid: 2bcdd4bd98748ac408a490c461045406, type: 3}
   - {fileID: 4126186263011358429, guid: 6dfa496a171c4aa4aa55bbfa4aa47f73, type: 3}
   - {fileID: 4126186263011358429, guid: 60644cdac9418f440bcd9dd608266e11, type: 3}
+  - {fileID: 4126186263011358429, guid: f2863695349802e4faad1933a6d12b1f, type: 3}
   retryDelay: 0.5
   speedRateIncreasePerSegment: 0.06
   maxPlayerSpeed: 10

@@ -8,7 +8,7 @@ namespace Player.Input
     public abstract class BaseInputHandler : MonoBehaviour, IInputHandler
     {
         public abstract int MovementDirection { get; }
-        public abstract void TemporaryStopMovement(float? duration);
+        public abstract void TemporaryStopMovement(float? duration = null);
         public abstract void Suspend(bool includingMovement, float? duration = null);
         public abstract void CancelSuspend(bool includingMovement);
         public abstract void ResumeMovement();

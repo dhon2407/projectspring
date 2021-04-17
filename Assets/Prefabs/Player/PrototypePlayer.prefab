@@ -677,8 +677,6 @@ GameObject:
   - component: {fileID: 7853426713638563735}
   - component: {fileID: 7982316354510532225}
   - component: {fileID: 3280551501119560619}
-  - component: {fileID: 6787512281321190012}
-  - component: {fileID: 2120476739}
   m_Layer: 6
   m_Name: PrototypePlayer
   m_TagString: Player
@@ -703,6 +701,8 @@ Transform:
   - {fileID: 5808897868130094156}
   - {fileID: 1201830145}
   - {fileID: 3822361606211751322}
+  - {fileID: 1773189989383137687}
+  - {fileID: 1774922795214263560}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -825,16 +825,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d4badabce1241d3899461c05f825fa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  touchInputHandler: {fileID: 6482825464545767660}
+  InputHandler: {fileID: 6482825464545767660}
   playerName: 
   blockDuration: 0.5
+  blockSuccessRecovery: 0.5
+  blockKnockBack: {x: -100, y: 20}
   maxAttackUnlock: 3
---- !u!114 &6787512281321190012
+--- !u!1 &6364062089416889057
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1773189989383137687}
+  - component: {fileID: 6482825464545767660}
+  m_Layer: 6
+  m_Name: TouchController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1773189989383137687
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6364062089416889057}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7216317338779392757}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6482825464545767660
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5126507520524490402}
+  m_GameObject: {fileID: 6364062089416889057}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2af037847c04ef389afb424bba67e28, type: 3}
@@ -843,13 +878,44 @@ MonoBehaviour:
   requiredAngle: 0
   requiredArc: -1
   minSwipeValueDetection: 1
---- !u!114 &2120476739
+--- !u!1 &6832662105922473703
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1774922795214263560}
+  - component: {fileID: 1517104327906250025}
+  m_Layer: 6
+  m_Name: KeyboardController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1774922795214263560
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6832662105922473703}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7216317338779392757}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1517104327906250025
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5126507520524490402}
+  m_GameObject: {fileID: 6832662105922473703}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d23799743458498bbe214323cc9a8d41, type: 3}

@@ -8,6 +8,6 @@
                 player.DoAction(this);
         }
 
-        public int RequiredStamina => 40;
+        public int RequiredStamina => 20;
     }
 }
