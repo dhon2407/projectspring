@@ -138,15 +138,6 @@ namespace Player.Input
 				EnqueueAction(new Block());
 		}
 
-		private void EnqueueAction(IAction action)
-		{
-			var actionType = action.GetType();
-			if (BlockedActions.Contains(actionType))
-				return;
-			
-			InputActions.Enqueue(action);
-		}
-
 		private bool AngleIsValid(Vector2 vector)
 		{
 			if (!(requiredArc >= 0.0f)) return true;

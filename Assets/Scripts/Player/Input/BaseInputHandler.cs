@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Player.Input.Action;
+using UI;
 using UnityEngine;
 
 namespace Player.Input
@@ -32,5 +33,17 @@ namespace Player.Input
         }
 
         protected readonly Queue<IAction> InputActions = new Queue<IAction>();
+        
+        protected void EnqueueAction(IAction action)
+        {
+            if (Options.IsOpen)
+                return;
+            
+            var actionType = action.GetType();
+            if (BlockedActions.Contains(actionType))
+                return;
+			
+            InputActions.Enqueue(action);
+        }
     }
 }

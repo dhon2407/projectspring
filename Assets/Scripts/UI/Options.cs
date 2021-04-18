@@ -7,7 +7,14 @@ namespace UI
 {
     public class Options : MonoBehaviour
     {
-        public static bool IsOpen;
+        public static bool IsOpen { get; private set; }
+
+        #region EVENTS
+
+        public delegate void ChangeState(bool isOpen);
+        public static event ChangeState OnOpen;
+
+        #endregion
         
         [SerializeField]
         private BaseUIToggler bmgToggler = null;
@@ -32,7 +39,7 @@ namespace UI
         [SerializeField, ReadOnly]
         private string ppURL =
             "https://docs.google.com/document/d/1cOu4Z9VVM4ENfNpmJGliOhYyYuMvBVEtUcqNtLWth9U/edit?usp=sharing";
-
+        
         public void ToggleShow()
         {
             if (_animating)
@@ -48,6 +55,8 @@ namespace UI
         {
             _animating = true;
             _shown = true;
+            OnOpen?.Invoke(_shown);
+            
             Time.timeScale = 0;
             _transform.DOScale(Vector3.one, 0.5f).SetUpdate(true);
             _canvasGroup.DOFade(1, 0.5f).OnComplete(() =>
@@ -61,6 +70,7 @@ namespace UI
         {
             _animating = true;
             _shown = false;
+            OnOpen?.Invoke(_shown);
             
             Time.timeScale = 1;
             _canvasGroup.DOFade(0, 0.2f).OnComplete(() =>

@@ -104,14 +104,5 @@ namespace Player.Input
             if (UnityEngine.Input.GetKeyDown(KeyCode.C))
                 EnqueueAction(new Block());
         }
-        
-        private void EnqueueAction(IAction action)
-        {
-            var actionType = action.GetType();
-            if (BlockedActions.Contains(actionType))
-                return;
-			
-            InputActions.Enqueue(action);
-        }
     }
 }

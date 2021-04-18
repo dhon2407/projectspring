@@ -41,7 +41,7 @@ namespace Managers
 
         private void RequestBannerAd()
         {
-            _bannerAd = new BannerView(BannerAdIDTest, AdSize.Banner, AdPosition.Bottom);
+            _bannerAd = new BannerView(BannerAdIDTest, AdSize.Banner, AdPosition.Top);
             _bannerAd.OnAdLoaded += HandleOnAdLoaded;
             _bannerAd.OnAdFailedToLoad += HandleOnAdFailedToLoad;
 

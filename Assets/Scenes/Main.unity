@@ -598,6 +598,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d4badabce1241d3899461c05f825fa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &135557756 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6482825464545767660, guid: 5169597be03580c48a8f18fcb66c486e, type: 3}
+  m_PrefabInstance: {fileID: 879524191}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2af037847c04ef389afb424bba67e28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &141892240
 GameObject:
   m_ObjectHideFlags: 0
@@ -5530,7 +5541,7 @@ PrefabInstance:
     - target: {fileID: 3280551501119560619, guid: 5169597be03580c48a8f18fcb66c486e, type: 3}
       propertyPath: InputHandler
       value: 
-      objectReference: {fileID: 1289071093}
+      objectReference: {fileID: 135557756}
     - target: {fileID: 3280551501119560619, guid: 5169597be03580c48a8f18fcb66c486e, type: 3}
       propertyPath: blockKnockBack.x
       value: -500
@@ -6057,6 +6068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   message: {fileID: 1637391824}
+  inEditorOnly: 1
 --- !u!1 &1063333063
 GameObject:
   m_ObjectHideFlags: 0
@@ -7074,24 +7086,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1283493742}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.2048, y: 0.6890001, z: -10}
+  m_LocalPosition: {x: 2.0887578, y: 0.6890001, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 736651264}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1289071093 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1517104327906250025, guid: 5169597be03580c48a8f18fcb66c486e, type: 3}
-  m_PrefabInstance: {fileID: 879524191}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d23799743458498bbe214323cc9a8d41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1302078471
 GameObject:
   m_ObjectHideFlags: 0
@@ -8234,7 +8235,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: v.101
+  m_text: V0.1.9
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 078ca39659f7fd543aec4211ca0c2638, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: b1e343ff6370898418d6ecfd721af74c, type: 2}
@@ -8653,7 +8654,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: v.101
+  m_text: V0.1.9
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 078ca39659f7fd543aec4211ca0c2638, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 81323bf2cb740b84d80b5254f982534e, type: 2}
@@ -9542,6 +9543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   message: {fileID: 1717165951}
+  inEditorOnly: 0
 --- !u!222 &1847668135
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10927,7 +10929,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -60}
+  m_AnchoredPosition: {x: 0, y: -90}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2138831541
